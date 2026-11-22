@@ -558,6 +558,8 @@ details.ev>summary{display:flex;align-items:center;gap:6px;padding:7px 10px;flex
 #tt.down:after{top:-5px;border-left:1px solid rgba(127,219,202,.45);border-top:1px solid rgba(127,219,202,.45)}
 footer{margin-top:14px;font-size:11px;color:var(--dim);line-height:1.5}
 footer .w{color:#ff8f73}
+footer .made{display:inline-block;margin-top:8px;padding:5px 11px;border:1px solid var(--line);border-radius:999px;background:rgba(29,155,240,.08);color:#cfe3f3;font-size:12px;font-weight:700}
+footer .made a{color:#1d9bf0;text-decoration:none}
 """
 
 SHORT_MEAN_WIDTH = 0
@@ -790,7 +792,8 @@ def render(ctx):
         A(f'<div class="nu"><h4>{esc(date_ko(title))}</h4><ul>' + "".join(note_li(x) for x in items) + '</ul></div>')
     A('</div></details></section>')
     A(f'<footer>공개 코드 기본값 · <span class="w">실제 서비스 적용 여부는 확인할 수 없어요 · 추천 순위용 점수이고 수익 지급액과는 별개예요</span><br>'
-      f'최신 커밋 {latest["sha"][:7]} ({lt:%Y-%m-%d %H:%M} 한국 시간) · 마지막 갱신 {now:%Y-%m-%d %H:%M} 한국 시간</footer>')
+      f'최신 커밋 {latest["sha"][:7]} ({lt:%Y-%m-%d %H:%M} 한국 시간) · 마지막 갱신 {now:%Y-%m-%d %H:%M} 한국 시간<br>'
+      f'<span class="made">✈️ <a href="https://x.com/GreatJabez" target="_blank" rel="noopener">그레잇칼스</a> × 그록이 함께 만들었어요</span></footer>')
     A("""</div><script>
 (function(){var h=document.documentElement;h.classList.remove('js-off');
 var tabs=['switch','weight','log'];
