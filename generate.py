@@ -439,7 +439,7 @@ details.help[open]>summary{background:rgba(127,219,202,.15)}
 .helpbox ol{padding-left:18px;display:grid;gap:4px;font-size:13px;color:#cfd9e2}
 .helpbox b{color:#fff}
 /* tabs */
-.tabs{position:sticky;top:0;z-index:5;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;margin-bottom:10px;border:1px solid var(--line);border-radius:12px;background:rgba(12,16,22,.96);backdrop-filter:blur(6px)}
+.tabs{position:sticky;top:0;z-index:5;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:4px;margin-bottom:10px;border:1px solid var(--line);border-radius:12px;background:rgba(12,16,22,.96);backdrop-filter:blur(6px)}
 .tabs a{text-align:center;padding:9px 4px;border-radius:9px;color:#9fb0c0;font-weight:800;font-size:14px}
 .tabs a.act{background:#16324a;color:#fff;box-shadow:inset 0 0 0 1px rgba(29,155,240,.5)}
 .tab{display:none}.tab.act{display:block}
@@ -556,6 +556,35 @@ details.ev>summary{display:flex;align-items:center;gap:6px;padding:7px 10px;flex
 #tt:after{content:"";position:absolute;left:var(--ax,50%);width:9px;height:9px;background:#16212c;transform:translateX(-50%) rotate(45deg)}
 #tt.up:after{bottom:-5px;border-right:1px solid rgba(127,219,202,.45);border-bottom:1px solid rgba(127,219,202,.45)}
 #tt.down:after{top:-5px;border-left:1px solid rgba(127,219,202,.45);border-top:1px solid rgba(127,219,202,.45)}
+/* tips */
+.tabs .ls{display:none}
+@media(max-width:520px){.tabs a{font-size:13px;padding:9px 2px;letter-spacing:-.3px}.tabs .i.tip{margin-left:2px}}
+.th2{font-size:17px;font-weight:900;margin:2px 2px 4px}
+.warn{font-size:12px;color:#ffd7c9;background:rgba(255,143,115,.08);border:1px solid rgba(255,143,115,.35);border-radius:10px;padding:7px 10px;margin-bottom:8px}
+.warn b{color:#fff}
+.sh{font-size:14.5px;font-weight:900;margin:12px 2px 6px}
+.sh .mini{font-weight:700;margin-left:4px}
+.rl{display:grid;gap:5px}
+.ri{font-size:12.5px;color:#dbe4ec;overflow-wrap:anywhere;padding-bottom:5px;border-bottom:1px solid #1a2532}
+.ri:last-child{border-bottom:0;padding-bottom:0}
+.ri .kn{font-weight:700;color:#f1f6fa}.ri code.kc{font-size:10px;color:#6f8294}
+.rm{font-size:12px;color:var(--mint);margin-top:1px}
+.tc{border:1px solid var(--line);border-radius:12px;background:linear-gradient(180deg,rgba(18,24,33,.94),rgba(14,18,25,.94));padding:9px 12px;margin-bottom:7px}
+.tch{display:flex;align-items:center;gap:7px;margin-bottom:4px}
+.tch h4{font-size:14.5px;font-weight:800;flex:1;min-width:0}
+.tno{flex:none;width:20px;height:20px;border-radius:50%;background:#16324a;color:#bfe3ff;font-size:11.5px;font-weight:900;display:grid;place-items:center}
+.tchg{flex:none;font-size:10px;font-weight:800;padding:1px 5px;border-radius:5px;background:rgba(255,184,77,.14);color:var(--amber);text-decoration:none}
+.tc ul,.ocr ul{padding-left:17px;display:grid;gap:3px;font-size:13px;color:#cfd9e2}
+.tc li b,.ocr li b{color:#fff}
+.bs{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin-top:6px}
+.bl{font-size:10.5px;color:var(--dim);font-weight:800;margin-right:2px}
+.bc{font-size:11px;padding:1px 6px;border-radius:6px;background:#151c25;border:1px dashed #2f4256;color:#b9c6d2;text-decoration:none;white-space:nowrap}
+.bc b{color:#e8f4ff;font-variant-numeric:tabular-nums}
+.bc.neg b{color:var(--red)}.bc.on b{color:var(--on)}
+.ocr{border-color:rgba(255,196,107,.35)}
+.elig{margin-top:8px;padding-top:6px;border-top:1px solid var(--line)}
+@media(min-width:900px){.tcs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 8px;align-items:start}}
+@media(max-width:400px){.tabs .lf{display:none}.tabs .ls{display:inline}}
 footer{margin-top:14px;font-size:11px;color:var(--dim);line-height:1.5}
 footer .w{color:#ff8f73}
 footer .made{display:inline-block;margin-top:8px;padding:5px 11px;border:1px solid var(--line);border-radius:999px;background:rgba(29,155,240,.08);color:#cfe3f3;font-size:12px;font-weight:700}
@@ -611,7 +640,8 @@ def render(ctx):
     A('<nav class="tabs">'
       f'<a href="#switch" data-t="switch">스위치<span class="i tip"{tip("기능별 ON/OFF 상태예요. 켜짐은 그 기능이 돌고 있다는 뜻이지, 점수를 더 준다는 뜻이 아니에요")}>ⓘ</span></a>'
       f'<a href="#weight" data-t="weight">가중치<span class="i tip"{tip("답글·좋아요·공유 같은 행동을 얼마나 쳐주는지 숫자로 보여줘요. 클수록 그런 반응이 나올 글을 위로 올려요")}>ⓘ</span></a>'
-      f'<a href="#log" data-t="log">업데이트 기록<span class="i tip"{tip("X가 코드를 올린 날짜별로 스위치·가중치·설정이 어떻게 바뀌었는지 정리했어요")}>ⓘ</span></a></nav>')
+      f'<a href="#log" data-t="log"><span class="lf">업데이트 기록</span><span class="ls">기록</span><span class="i tip"{tip("X가 코드를 올린 날짜별로 스위치·가중치·설정이 어떻게 바뀌었는지 정리했어요")}>ⓘ</span></a>'
+      f'<a href="#tips" data-t="tips"><span class="lf">크리에이터 팁</span><span class="ls">팁</span><span class="i tip"{tip("공개 코드 숫자로 만든 콘텐츠 팁이에요. 코드가 바뀌면 자동으로 다시 만들어져요")}>ⓘ</span></a></nav>')
 
     # ---------------- switch tab
     A(f'<section class="tab" id="t-switch"><div class="note">home-mixer {len(hm_b)}개 (ON {hm_on}) · vm-ranker {len(vm_b)}개 (ON {vm_on}) · 핵심과 NEW만 표시 · 칸을 누르면 설명</div>')
@@ -791,12 +821,13 @@ def render(ctx):
     for title, items in nt:
         A(f'<div class="nu"><h4>{esc(date_ko(title))}</h4><ul>' + "".join(note_li(x) for x in items) + '</ul></div>')
     A('</div></details></section>')
+    A(render_tips(ctx))
     A(f'<footer>공개 코드 기본값 · <span class="w">실제 서비스 적용 여부는 확인할 수 없어요 · 추천 순위용 점수이고 수익 지급액과는 별개예요</span><br>'
       f'최신 커밋 {latest["sha"][:7]} ({lt:%Y-%m-%d %H:%M} 한국 시간) · 마지막 갱신 {now:%Y-%m-%d %H:%M} 한국 시간<br>'
       f'<span class="made">✈️ <a href="https://x.com/GreatJabez" target="_blank" rel="noopener">그레잇칼스</a> × 그록이 함께 만들었어요</span></footer>')
     A("""</div><script>
 (function(){var h=document.documentElement;h.classList.remove('js-off');
-var tabs=['switch','weight','log'];
+var tabs=['switch','weight','log','tips'];
 function show(){var t=(location.hash||'').slice(1);if(tabs.indexOf(t)<0)t='switch';
 tabs.forEach(function(x){document.getElementById('t-'+x).classList.toggle('act',x===t);
 document.querySelector('.tabs a[data-t="'+x+'"]').classList.toggle('act',x===t);});}
@@ -823,6 +854,295 @@ if(!touch)document.querySelectorAll('.hov').forEach(function(el){var sm=el.query
 window.addEventListener('scroll',function(){if(cur)place(cur);},{passive:true});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();
 </script></body></html>""")
+    return "".join(out)
+
+
+# ---------------------------------------------------------------- creator tips
+# 크리에이터 팁 탭. 숫자와 ON/OFF는 매번 최신 스냅샷에서 읽어서 문장에 넣는다.
+# 가중치나 스위치가 없어지면 그 팁은 숨기거나 남은 근거만으로 보여준다.
+TIPS_DAYS = 30
+OCR_URL = "https://help.x.com/en/using-x/original-content-rewards"
+OCR_ARCHIVE = "https://web.archive.org/web/20261019152944/https://help.x.com/en/using-x/original-content-rewards"
+OCR_CHECKED = "2026-11-22"
+VIDEO_W = ["VqvWeight", "VideoOpenWeight", "QuotedVqvWeight", "PostVideoWeight"]
+BAIT_SW = ["home-mixer:VMRankerSendEngagementIneligible", "vm-ranker:ExcludeIneligibleEngagementHeads"]
+CREATOR_SW = {  # 스위치 이름: (켜졌을 때, 꺼졌을 때) 크리에이터에게 뜻하는 것
+    "VMRankerSendEngagementIneligible": ("답글·공유·클릭을 유도하는 글의 라벨이 순위 모델로 넘어가요. 유도 문구는 피하는 게 좋아요",
+                                         "유도 글 라벨을 순위 모델로 넘기는 장치예요. 아직 꺼져 있지만, 켜지면 유도 글이 손해를 볼 수 있어요"),
+    "ExcludeIneligibleEngagementHeads": ("유도 라벨이 붙은 글은 그 반응 점수를 못 받아요. 유도 문구는 피하세요",
+                                         "유도 라벨이 붙은 글에서 그 반응 점수를 빼는 장치예요. 아직 꺼져 있어요"),
+    "EnableAuthorDiversity": ("같은 사람 글이 한 피드에 몰리면 뒤 글의 점수가 줄어요. 몰아 올리기보다 간격을 두세요",
+                              "같은 사람 글이 몰려도 점수를 깎지 않아요"),
+    "DppEnabled": ("비슷한 글이 한 피드에 몰리지 않게 섞어요. 같은 얘기만 반복하기보다 각도를 바꿔보세요", "비슷한 글 섞기가 꺼졌어요"),
+    "TopicDppEnabled": ("같은 주제 글이 몰리지 않게 섞어요. 한 주제만 반복하면 덜 유리할 수 있어요",
+                        "같은 주제 글을 섞는 장치예요. 아직 꺼져 있어서 지금 영향은 없어요"),
+    "VMRankerSendDppHistory": ("최근 본 글 이력을 보고 비슷한 글을 덜 보여줘요. 같은 얘기를 반복하면 덜 유리할 수 있어요",
+                               "최근 본 글과 비슷한 글을 덜 보여주는 장치예요. 지금은 꺼져 있어요"),
+    "EnableNewUserMinEngagementFilter": ("새로 온 사용자에겐 반응이 적은 글이 덜 보여요", "새로 온 사용자 대상 필터가 꺼졌어요"),
+    "NewUserMinEngagementFilterUseRatio": ("새로 온 사용자 필터가 반응 '수' 대신 '비율'을 봐요. 팔로워가 적어도 반응 비율이 좋으면 덜 걸러질 수 있어요",
+                                           "새로 온 사용자 필터가 반응 수를 기준으로 봐요"),
+    "EnableNewUserSoftNsfwFilter": ("새로 온 사용자 피드에선 선정적인 글이 걸러져요", "새로 온 사용자 대상 선정성 필터예요. 아직 꺼져 있어요"),
+}
+SKIP_SW = ("Ads", "Logging", "Experiment", "Stats", "Trace", "UnderTheHood", "Teacher")
+
+
+def ko_label(n):
+    return (WLABEL.get(n) or (KO_W.get(n),))[0] or n
+
+
+def render_tips(ctx):
+    snap, now, latest = ctx["snap"], ctx["now"], ctx["latest"]
+    sw, oth = snap["switches"], snap.get("other", {})
+    W = {short(k): v for k, v in snap["weights"].items() if k.startswith("home-mixer:") and v is not None}
+    lt = kst(latest["date"])
+    cutoff = now - dt.timedelta(days=TIPS_DAYS)
+    last_chg = ctx["last_weight_change"]
+    out = []
+    A = out.append
+
+    def chip(n, label=None, value=None, t=None):
+        v = W.get(n) if value is None else value
+        lab = label or ko_label(n)
+        tt = t or WTIP.get(n) or NEGTIP.get(n) or DWTIP.get(n) or f"{n} 가중치"
+        cls = " neg" if v is not None and v < 0 else ""
+        return f'<span class="bc tip{cls}"{tip(tt + " (" + n + ")")}>{esc(lab)} <b>{fmt(v)}</b></span>'
+
+    def recent(names):
+        ds = [kst(last_chg["home-mixer:" + n][0]) for n in names if "home-mixer:" + n in last_chg]
+        ds = [d for d in ds if d >= cutoff]
+        if not ds:
+            return ""
+        d = max(ds)
+        return f'<span class="tchg tip"{tip("최근 30일 안에 이 근거의 숫자가 바뀌었어요. 위의 최근 바뀐 점에서 자세히 볼 수 있어요")}>{d.month}/{d.day} 변경</span>'
+
+    def onoff(k):
+        return "켜져 있어요" if sw.get(k) else "꺼져 있어요"
+
+    def card(title, how, basis, chg="", rank=True):
+        return {"title": title, "how": how, "basis": basis, "chg": chg, "rank": rank}
+
+    pos_cards = []  # (정렬값, 카드)
+    # 1) 공유하고 싶은 글
+    sh = [n for n in ("ShareViaCopyLinkWeight", "ShareViaDmWeight", "ShareWeight") if W.get(n, 0) > 0]
+    if sh:
+        top = max(sh, key=lambda n: W[n])
+        how = ["꿀팁, 정리, 체크리스트, 비교표처럼 <b>저장해 두거나 친구에게 보내고 싶은 글</b>을 만들어보세요",
+               "핵심을 한 화면 안에 정리하고, 출처나 근거를 같이 적으면 믿고 퍼가기 좋아요"]
+        if top == "ShareViaCopyLinkWeight":
+            how.insert(0, f"지금 코드에서 가장 큰 플러스 신호 중 하나가 <b>링크 복사 공유({fmt(W[top])})</b>예요. 다른 곳에 퍼가고 싶은 글이 유리해요")
+        pos_cards.append((W[top], card("📤 보내고 싶은 글을 만드세요", how, [chip(n) for n in sh], recent(sh))))
+    # 2) 대화가 이어지는 글
+    rp, bo = W.get("ReplyWeight"), W.get("BidirectionalFollowReplyWeightBoost")
+    if rp and rp > 0:
+        b = [chip("ReplyWeight")]
+        how = ["글 끝에 <b>자연스럽게 의견을 묻는 질문</b>을 붙여보세요. 정답이 하나가 아닌 질문이 좋아요",
+               "달린 답글에 답해주면 대화가 길어져요"]
+        val = rp
+        if bo and bo > 0:
+            val = rp + bo
+            how.insert(1, f"서로 팔로우하는 사람이 단 답글은 보너스가 붙어 <b>{fmt(rp)}+{fmt(bo)}={fmt(val)}</b>이 돼요. 평소 맞팔 이웃과 꾸준히 소통해두면 좋아요")
+            b.append(chip("BidirectionalFollowReplyWeightBoost", "맞팔 답글 보너스", t=WTIP["__mutual"]))
+        pos_cards.append((val, card("💬 대화가 이어지는 글을 쓰세요", how, b, recent(["ReplyWeight", "BidirectionalFollowReplyWeightBoost"]))))
+    # 3) 인용
+    if W.get("QuoteWeight", 0) > 0:
+        pos_cards.append((W["QuoteWeight"], card("🔁 한마디 보태고 싶은 글", [
+            "사람마다 생각이 갈릴 만한 주제, 내 경험이 담긴 관점은 <b>인용하며 의견을 덧붙이기</b> 좋아요",
+            "다만 싸움을 붙이는 글은 뮤트·신고로 이어질 수 있어요. 논쟁보다 관점을 보여주세요"],
+            [chip("QuoteWeight")], recent(["QuoteWeight"]))))
+    # 4) 팔로우
+    if W.get("FollowAuthorWeight", 0) > 0:
+        pos_cards.append((W["FollowAuthorWeight"], card("👤 팔로우할 이유를 보여주세요", [
+            "한두 가지 주제를 꾸준히 다루면 '이 사람 글 더 보고 싶다'는 이유가 생겨요",
+            "시리즈물(1편·2편)이나 정기 코너를 만들고, 프로필 소개에 무엇을 올리는 계정인지 적어두세요"],
+            [chip("FollowAuthorWeight")], recent(["FollowAuthorWeight"]))))
+    pos_cards.sort(key=lambda x: -x[0])
+    cards = [c for _, c in pos_cards]
+    # 5) 좋아요
+    fv = W.get("FavoriteWeight")
+    if fv is not None and pos_cards:
+        mx = pos_cards[0][0]
+        if fv < mx:
+            cards.append(card("❤️ 좋아요만 노리진 마세요", [
+                f"좋아요 가중치는 <b>{fmt(fv)}</b>로, 가장 큰 신호({fmt(mx)})보다 훨씬 작아요",
+                "좋아요가 많이 붙는 가벼운 글보다, 공유·답글·끝까지 읽기가 나오는 글이 순위엔 더 도움이 돼요"],
+                [chip("FavoriteWeight")] + ([chip("RetweetWeight")] if "RetweetWeight" in W else []),
+                recent(["FavoriteWeight", "RetweetWeight"]), False))
+        else:
+            cards.append(card("❤️ 좋아요도 큰 신호예요", [f"지금 코드에선 좋아요 가중치(<b>{fmt(fv)}</b>)가 가장 큰 플러스 신호와 비슷하거나 더 커요"],
+                              [chip("FavoriteWeight")], recent(["FavoriteWeight"]), False))
+    # 6) 머무름
+    dws = [n for n in DWELL if n in W and n != "NotDwelledWeight" and W[n] > 0]
+    if dws:
+        how = ["<b>첫 줄</b>에서 멈추게 하고, 본문은 끝까지 읽을 이유가 있게 알차게 채워보세요",
+               "긴 글은 줄바꿈과 소제목으로 읽기 편하게 나누세요"]
+        nt = ctx.get("notable") or []
+        hits = [date_ko(t) for t, items in nt if any(re.search(r"all the way through|time spent|dwell", x, re.I) for x in items)]
+        if hits:
+            how.append("README 공지(" + ", ".join(hits[:2]) + ")에 따르면 머무는 시간과 끝까지 읽기를 예측하는 모델이 좋아졌어요. 낚시 첫 줄로 들어왔다가 바로 나가는 글은 오히려 불리할 수 있어요")
+        if W.get("NotDwelledWeight", 0) < 0:
+            how.append(f"그냥 스크롤로 넘길 것 같은 글엔 작은 감점({fmt(W['NotDwelledWeight'])})도 있어요")
+        b = [chip(n) for n in dws] + ([chip("NotDwelledWeight")] if "NotDwelledWeight" in W else [])
+        cards.append(card("⏱️ 끝까지 읽히는 글", how, b, recent(DWELL), False))
+    # 7) 마이너스
+    ng = [n for n in NEG if W.get(n, 0) < 0]
+    if ng:
+        cards.append(card("🚫 낚시·도배·과장은 피하세요", [
+            "제목 낚시, 과장, 같은 글 도배는 <b>신고·뮤트·관심 없음</b>을 부르고, 이 감점은 플러스 신호보다 훨씬 커요",
+            "숫자는 실제 신고 횟수가 아니라 그런 반응이 나올 <b>예측 확률</b>에 곱해요. 신고 1번이 좋아요 수백 개를 지운다는 뜻은 아니에요"],
+            [chip(n) for n in ng], recent(ng), False))
+    # 8) 유도 문구
+    bait = [k for k in BAIT_SW if k in sw]
+    if bait:
+        n_on = sum(1 for k in bait if sw[k])
+        state = "지금 코드에선 켜져 있어요" if n_on == len(bait) else ("지금 코드에선 꺼져 있어요" if n_on == 0 else "지금 코드에선 일부만 켜져 있어요")
+        how = ["'답글 달아주세요', '공유 부탁해요', '눌러보세요' 같은 <b>반응 유도 문구</b>는 빼세요",
+               f"코드에 유도 글에 라벨을 붙여 답글·공유·클릭 점수를 빼는 장치가 있어요. {state}"
+               + (". 켜지면 유도 글은 손해를 볼 수 있어요" if n_on < len(bait) else ""),
+               "OCR 규칙에서도 반응을 계속 요구하는 건 위반이에요"]
+        b = [f'<span class="bc tip{" on" if sw[k] else ""}"{tip(((sw_ko(short(k)) or ("", ""))[1] or short(k)) + " (" + short(k) + ")")}>{esc((sw_ko(short(k)) or (short(k),))[0])} <b>{"ON" if sw[k] else "OFF"}</b></span>' for k in bait]
+        cards.append(card("🙅 반응을 조르지 마세요", how, b, "", False))
+    # 9) 간격 두기
+    ad = sw.get("vm-ranker:EnableAuthorDiversity")
+    if ad is not None:
+        dec, flo = to_num(str(oth.get("vm-ranker:AuthorDiversityDecay", ""))), to_num(str(oth.get("vm-ranker:AuthorDiversityFloor", "")))
+        how = ["한 번에 여러 개를 몰아 올리기보다 <b>시간 간격을 두고</b> 올려보세요"]
+        if ad and dec is not None and flo is not None:
+            m2, m3 = (1 - flo) * dec + flo, (1 - flo) * dec ** 2 + flo
+            how.append(f"작성자 다양성 장치가 <b>켜져 있어요</b>(vm-ranker 기본값). 한 사람 글이 같은 피드 후보에 여러 개 오르면 두 번째 글은 점수 ×{fmt(round(m2, 3))}, 세 번째는 ×{fmt(round(m3, 3))}로 줄어요")
+        elif ad:
+            how.append("작성자 다양성 장치가 <b>켜져 있어요</b>(vm-ranker 기본값). 같은 사람 글이 몰리면 뒤 글의 점수가 줄어요")
+        else:
+            how.append("작성자 다양성 장치는 지금 코드에선 <b>꺼져 있어요</b>. 그래도 같은 글이 쏟아지면 뮤트·관심 없음으로 이어질 수 있어요")
+        b = [f'<span class="bc tip{" on" if ad else ""}"{tip("같은 작성자 글이 한 피드에 몰리지 않게 뒤 글의 점수를 낮추는 장치예요. home-mixer 자체 점수 계산 쪽에는 꺼진 채로 고정돼 있어요 (EnableAuthorDiversity)")}>작성자 다양성 <b>{"ON" if ad else "OFF"}</b></span>']
+        if "vm-ranker:DppEnabled" in sw:
+            how.append("비슷한 글이 몰리지 않게 섞는 장치(DPP)도 " + onoff("vm-ranker:DppEnabled") + ". 같은 얘기만 반복하기보다 주제와 각도를 바꿔보세요")
+            b.append(f'<span class="bc tip{" on" if sw["vm-ranker:DppEnabled"] else ""}"{tip("비슷한 글이 한 피드에 몰리지 않게 골라내는 장치예요 (DppEnabled)")}>유사 글 분산 <b>{"ON" if sw["vm-ranker:DppEnabled"] else "OFF"}</b></span>')
+        cards.append(card("🗓️ 몰아 올리지 말고 간격을 두세요", how, b, "", False))
+    # 10) 영상
+    vw = [n for n in VIDEO_W if n in W]
+    if vw:
+        if all(W[n] == 0 for n in vw):
+            how = ["홈 피드에서 영상 관련 가중치가 <b>전부 0</b>이에요. 영상이라는 이유만으로 가산점이 붙진 않아요",
+                   "영상도 결국 공유·답글·머무름 같은 신호로 평가돼요. 편한 형식으로 내용에 집중하세요"]
+            title = "🎬 영상이라고 자동 가산점은 없어요"
+        else:
+            nz = [n for n in vw if W[n] != 0]
+            how = ["홈 피드 영상 가중치에 0이 아닌 값이 있어요 (" + ", ".join(f"{ko_label(n)} {fmt(W[n])}" for n in nz) + "). 영상 시청도 점수에 들어가요",
+                   "영상은 앞부분에서 바로 핵심을 보여주세요"]
+            title = "🎬 영상 시청도 점수에 들어가요"
+        cards.append(card(title, how, [chip(n) for n in vw], recent(vw), False))
+
+    # ---- 최근 바뀐 점
+    tl = [x for x in reversed(ctx["timeline"]) if kst(x[0]["date"]) >= cutoff]  # 오래된 것부터
+    wch, swch, others = {}, {}, 0
+    for c, d, s in tl:
+        dd = kst(c["date"])
+        for k, o, n in d["w_chg"]:
+            if not k.startswith("home-mixer:"):
+                others += 1
+                continue
+            e = wch.setdefault(k, {"old": o, "steps": []})
+            e["new"] = n
+            e["steps"].append((dd, n))
+        others += len(d["w_add"]) + len(d["w_del"])
+        for k, v in d["sw_add"]:
+            swch[k] = {"add": dd, "old": None, "new": v, "last": dd}
+        for k, a, b2 in d["sw_flip"]:
+            e = swch.setdefault(k, {"add": None, "old": a, "last": dd})
+            e["new"], e["last"] = b2, dd
+        others += len(d["sw_del"])
+    rows = []
+    for k, e in sorted(wch.items(), key=lambda kv: -kv[1]["steps"][-1][0].timestamp()):
+        n = short(k)
+        o, nv = e["old"], e["new"]
+        lab = ko_label(n)
+        steps = " → ".join(f"{fmt(v)}({d.month}/{d.day})" for d, v in e["steps"])
+        if o == nv:
+            what, mean = f"{fmt(o)} → {steps}", "잠깐 바뀌었다가 원래 값으로 돌아왔어요. 결과적으로 예전과 같아요"
+        else:
+            what = f"{fmt(o)} → {steps}"
+            if n in NEG or (nv < 0 and o <= 0):
+                mean = "이런 반응을 부르는 글은 더 크게 깎일 수 있어요" if nv < o else "감점이 조금 약해졌지만 여전히 큰 감점이에요"
+            elif nv == 0:
+                mean = "지금은 이 행동이 순위에 반영되지 않아요"
+            elif nv > o:
+                mean = f"'{lab}' 비중이 커졌어요. 이 반응이 나오는 글이 더 유리해졌을 수 있어요"
+            else:
+                mean = f"'{lab}' 비중이 조금 줄었어요"
+            if abs(nv - o) <= abs(o) * 0.1 and o != 0 and nv != 0:
+                mean += " (변화 폭은 작아요)"
+        rows.append(("w", e["steps"][-1][0], f'<span class="c w">가중치</span> <span class="kn">{esc(lab)}</span> <b>{esc(what)}</b>', mean))
+    sw_rows, sw_more = [], 0
+    for k, e in sorted(swch.items(), key=lambda kv: -kv[1]["last"].timestamp()):
+        n = short(k)
+        if k not in sw:
+            continue
+        rel = n in CREATOR_SW or (category(n) in ("spam", "ranking") and not any(x in n for x in SKIP_SW))
+        if not rel:
+            sw_more += 1
+            continue
+        cur = sw[k]
+        d = e["last"]
+        if e["add"] is not None:
+            tag, cls = f'새로 생김 {e["add"].month}/{e["add"].day} · 지금 {"ON" if cur else "OFF"}', "add"
+        elif e["old"] == cur:
+            tag, cls = f'켰다 끔 · 지금 {"ON" if cur else "OFF"}', "flip"
+        else:
+            tag, cls = f'{d.month}/{d.day} {"켜짐" if cur else "꺼짐"}', "flip"
+        if n in CREATOR_SW:
+            mean = CREATOR_SW[n][0 if cur else 1]
+        elif cur:
+            mean = "이 기능이 지금 돌고 있어요. 크리에이터에게 주는 영향은 코드만으로는 분명하지 않아요"
+        else:
+            mean = "아직 꺼져 있어서 지금 당장 영향은 없어요"
+        sw_rows.append(("s", d, f'<span class="c {cls}">{esc(tag)}</span> {kn("switch", n)}', mean))
+    rows += sw_rows[:6]
+    sw_more += max(0, len(sw_rows) - 6)
+    # 크리에이터에게 뜻이 분명한 것(큰 가중치 변화, 설명이 있는 스위치)을 먼저 보여주고 나머지는 접는다
+    def prio(r):
+        kind, d, head, mean = r
+        weak = "(변화 폭은 작아요)" in mean or "당장 영향은 없어요" in mean or "분명하지 않아요" in mean
+        return (weak, -d.timestamp())
+    rows.sort(key=prio)
+    A(f'<section class="tab" id="t-tips"><h2 class="th2">크리에이터를 위한 팁</h2>'
+      f'<div class="note">최신 커밋 <b>{latest["sha"][:7]}</b> ({lt:%Y-%m-%d} 한국 시간) 기준 · 코드가 바뀔 때마다 숫자와 문장이 자동으로 다시 만들어져요</div>'
+      '<div class="warn">⚠️ 아래 숫자는 <b>피드 순위 점수</b>예요. <b>수익 단가가 아니에요.</b> 공개 코드 기본값이라 실제 서비스에 똑같이 적용되는지는 확인할 수 없어요</div>')
+    A(f'<div class="card recent"><div class="ch3"><h3>🆕 최근 바뀐 점</h3><span class="mini">최근 {TIPS_DAYS}일 · {lt.month}/{lt.day} 커밋까지</span></div>')
+    if rows:
+        def ri(r):
+            return f'<div class="ri"><div>{r[2]}</div><div class="rm">→ {esc(r[3])}</div></div>'
+        A('<div class="rl">' + "".join(ri(r) for r in rows[:5]) + '</div>')
+        if len(rows) > 5:
+            A(f'<details class="rest"><summary>작은 변화 {len(rows) - 5}개 더 보기</summary><div class="rl">' + "".join(ri(r) for r in rows[5:]) + '</div></details>')
+    else:
+        A(f'<div class="mini">최근 {TIPS_DAYS}일 동안 가중치나 주요 스위치에 바뀐 점이 없어요</div>')
+    if sw_more or others:
+        A(f'<div class="mini" style="margin-top:6px">그 밖에 광고·영상 캐러셀·기록용 등 기술적인 변화 {sw_more + others}건은 <a href="#log" class="tolog">업데이트 기록</a> 탭에서 볼 수 있어요</div>')
+    A('</div>')
+    A('<h3 class="sh">📊 코드에서 보이는 것 <span class="mini">노출 순위</span></h3>')
+    A('<div class="tcs">')
+    for i, cd in enumerate(cards, 1):
+        A(f'<div class="tc"><div class="tch"><span class="tno">{i}</span><h4>{cd["title"]}</h4>{cd["chg"]}</div><ul>'
+          + "".join(f"<li>{h}</li>" for h in cd["how"]) + '</ul>'
+          f'<div class="bs"><span class="bl">근거</span>{"".join(cd["basis"])}</div></div>')
+    A('</div>')
+    np_ = len(pos_cards)
+    A('<div class="note" style="margin-top:2px">' + (f'1~{np_}번은 지금 가중치가 큰 순서예요. ' if np_ > 1 else '') + '숫자는 그 행동이 나올 <b>예측 확률</b>에 곱하는 값이라, 실제 반응 횟수와 바로 비교할 수 없어요</div>')
+    # ---- OCR 공식 규칙 (정적)
+    A('<h3 class="sh">💰 OCR(오리지널 콘텐츠 리워드) 공식 규칙</h3><div class="note">수익 기준 · X 공식 도움말 내용 · 마지막 확인 <b>' + OCR_CHECKED + '</b></div><div class="card ocr"><ul>'
+      '<li><b>직접 만든 콘텐츠만 원본으로 쳐줘요.</b> 그대로 퍼온 글·사진·영상, 단어 몇 개나 필터·자막만 바꾼 것, 남의 콘텐츠 모음글, 다른 플랫폼에서 가져온 글은 수익이 안 나요. '
+      '뉴스나 이슈에 <b>내 관점·분석을 더한 코멘트</b>는 원본으로 인정돼요</li>'
+      '<li>남의 사진·영상을 쓸 땐 X의 <b>사진 공유·클립 기능</b>을 쓰세요. 원작자 표시가 자동으로 붙어요'
+      f'<span class="i tip"{tip("이 부분은 도움말 페이지가 아니라 @XCreators 공식 계정 발표에서 확인한 내용이에요")}>ⓘ</span></li>'
+      '<li><b>"좋아요·RT·팔로우 해주세요"처럼 반응을 계속 요구하면 규칙 위반</b>이에요</li>'
+      '<li><b>수익은 홈 피드 노출만 세요.</b> 프리미엄 사용자에게 글이 절반 이상 보인 경우이고, 같은 사람이 여러 번 봐도 한 번만 세요. 유료·조작된 노출은 빠져요</li>'
+      '<li><b>커뮤니티 노트가 붙었거나 오해를 살 만한 글</b>, 자동으로 만든 글, 수익 내는 법만 다루는 글은 수익에서 빠져요</li></ul>'
+      '<div class="mini elig"><b>신청 조건</b> · 프리미엄 구독 · 인증 팔로워 500명 이상 · 최근 90일 인증 사용자 홈 피드 노출 50만 이상(답글 노출 제외) · 만 18세 이상 · 노출 1회당 단가는 공개되지 않았어요</div>'
+      f'<div class="mini" style="margin-top:6px">출처 <a href="{OCR_URL}" target="_blank" rel="noopener">X 도움말 OCR 페이지</a> · X가 직접 접속을 막아 '
+      f'<a href="{OCR_ARCHIVE}" target="_blank" rel="noopener">2026-10-19 보관본</a>으로 확인했어요. 그 뒤에 바뀐 내용이 있을 수 있어요 · '
+      '<a href="https://x.com/XCreators/status/2115200336226816206" target="_blank" rel="noopener">사진 공유</a> · '
+      '<a href="https://x.com/XCreators/status/2119892170224074832" target="_blank" rel="noopener">클립</a> 발표</div>'
+      '<div class="mini" style="margin-top:4px">이 칸은 코드에서 오는 내용이 아니라 자동으로 바뀌지 않아요</div></div></section>')
     return "".join(out)
 
 
