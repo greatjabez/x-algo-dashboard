@@ -84,6 +84,30 @@ def kst(iso):
 
 
 # ---------------------------------------------------------------- texts
+def load_json(name):
+    """번역 파일 읽기. 없거나 깨져도 빈 dict 를 돌려줘서 영어 원문으로 보이게 한다."""
+    try:
+        d = json.load(open(os.path.join(HERE, name), encoding="utf-8"))
+        return d if isinstance(d, dict) else {}
+    except Exception:
+        return {}
+
+
+def _strmap(d):
+    return {k: v for k, v in (d or {}).items() if isinstance(k, str) and isinstance(v, str) and v.strip()} if isinstance(d, dict) else {}
+
+
+_KO = load_json("ko_names.json")
+KO_SW = {}
+for _k, _v in (_KO.get("switch") or {}).items() if isinstance(_KO.get("switch"), dict) else []:
+    if isinstance(_v, str) and _v.strip():
+        KO_SW[_k] = (_v, "")
+    elif isinstance(_v, (list, tuple)) and _v and isinstance(_v[0], str) and _v[0].strip():
+        KO_SW[_k] = (_v[0], _v[1] if len(_v) > 1 and isinstance(_v[1], str) else "")
+KO_W = _strmap(_KO.get("weight"))
+KO_ST = _strmap(_KO.get("setting"))
+KO_NOTE = _strmap(load_json("ko_notices.json").get("items"))
+
 KEY = {  # 이름: (한글 이름, 한 줄 설명)
     "EnableRanking": ("점수 순위 매기기", "VM 랭커로 글 점수를 매김"),
     "EnableRankerVmRank": ("랭커 VM 순위", "Phoenix 요청에 VM 순위를 넣어 다시 매김"),
@@ -245,7 +269,43 @@ def clip(v, n=60):
 
 
 def short(k):
-    return k.split(":", 1)[1]
+    return k.split(":", 1)[1] if ":" in k else k
+
+
+def sw_ko(n):
+    """스위치 이름 → (한국어 이름, 설명). 번역이 없으면 None."""
+    if n in KEY:
+        return KEY[n]
+    return KO_SW.get(n)
+
+
+def name_ko(kind, n):
+    if kind == "switch":
+        r = sw_ko(n)
+        return r[0] if r else None
+    if kind == "weight":
+        r = WLABEL.get(n)
+        return r[0] if r else KO_W.get(n)
+    return KO_ST.get(n)
+
+
+def kn(kind, n):
+    """업데이트 기록용: 한국어 이름 + 작은 코드 이름. 번역이 없으면 코드 이름만."""
+    ko = name_ko(kind, n)
+    if not ko:
+        return f'<code>{esc(n)}</code>'
+    return f'<span class="kn">{esc(ko)}</span> <code class="kc">{esc(n)}</code>'
+
+
+MONTHS = {m: i for i, m in enumerate(["January", "February", "March", "April", "May", "June", "July", "August",
+                                       "September", "October", "November", "December"], 1)}
+
+
+def date_ko(t):
+    m = re.fullmatch(r"\s*([A-Za-z]+)\s+(\d{1,2})(?:st|nd|rd|th)?,?\s+(\d{4})\s*", t or "")
+    if m and m.group(1).capitalize() in MONTHS:
+        return f"{m.group(3)}년 {MONTHS[m.group(1).capitalize()]}월 {int(m.group(2))}일"
+    return t
 
 
 # ---------------------------------------------------------------- history
@@ -420,6 +480,12 @@ details.rest[open]>summary:before,details.more[open]>summary:before{content:"▾
 .dn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .dn.on{color:#d9fbe9}
 .dn .led{width:6px;height:6px;flex:none}
+.dn.tip{text-decoration:none}
+.dn .dk{flex:none;max-width:62%;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Noto Sans CJK KR",sans-serif;font-size:12px;font-weight:700;color:#b9c6d2}
+.dn.on .dk{color:#e6fff1}
+.dn .dc{flex:1;min-width:0;font-size:9.5px;color:#5f7080}
+.dn .dc.en{font-size:11px;color:inherit}
+.dn.on .dc{color:#6fa88c}
 /* weights */
 .card{border:1px solid var(--line);border-radius:12px;background:linear-gradient(180deg,rgba(18,24,33,.94),rgba(14,18,25,.94));padding:10px 12px;margin-bottom:8px}
 .ch3{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
@@ -465,6 +531,13 @@ details.ev>summary{display:flex;align-items:center;gap:6px;padding:7px 10px;flex
 .eb{padding:0 10px 8px;display:grid;gap:2px;font-size:12px;color:#cfd9e2;overflow-wrap:anywhere}
 .eb code{font-size:11px;color:#e2ebf3}
 .eb .f{color:var(--dim);font-size:11px;margin-top:2px}
+.eb .kn{font-weight:700;color:#f1f6fa}
+.eb code.kc{font-size:10px;color:#6f8294}
+.eb .os{display:inline}
+.nu .en{font-size:11px;color:#7d8d9c;margin-top:2px}
+.nu details.orig>summary{display:inline-block;font-size:11px;color:var(--mint);font-weight:700;margin-top:2px}
+.nu details.orig>summary:before{content:"▸ "}
+.nu details.orig[open]>summary:before{content:"▾ "}
 .eb a{font-size:11px}
 .nu{padding:6px 0;border-top:1px solid var(--line)}
 .nu h4{font-size:13px;color:var(--mint);margin-bottom:3px}
@@ -560,7 +633,7 @@ def render(ctx):
         first = False
         for k, v in key_items:
             n = short(k)
-            ko, mean = KEY.get(n, (n, ""))
+            ko, mean = sw_ko(n) or (n, "")
             badges = ""
             if is_new(k):
                 badges += f'<span class="badge">NEW {md(kst(first_seen[k]))}</span>'
@@ -576,7 +649,14 @@ def render(ctx):
             ron = sum(v for _, v in rest)
             A(f'<details class="rest"><summary>나머지 {len(rest)}개 (ON {ron} · OFF {len(rest) - ron})</summary><div class="dense">')
             for k, v in rest:
-                A(f'<div class="dn{" on" if v else ""}"><span class="led"></span><span title="{esc(short(k))}">{esc(short(k))}{" · vm" if k.startswith("vm-") else ""}</span></div>')
+                n = short(k)
+                vmt = " · vm" if k.startswith("vm-") else ""
+                r = sw_ko(n)
+                if r:
+                    t = r[0] + (" · " + r[1] if r[1] else "") + " (" + n + vmt + ")"
+                    A(f'<div class="dn tip{" on" if v else ""}"{tip(t)}><span class="led"></span><span class="dk">{esc(r[0])}</span><span class="dc">{esc(n)}{vmt}</span></div>')
+                else:
+                    A(f'<div class="dn{" on" if v else ""}"><span class="led"></span><span class="dc en" title="{esc(n)}">{esc(n)}{vmt}</span></div>')
             A('</div></details>')
         A('</div></details>')
     A('</section>')
@@ -664,21 +744,21 @@ def render(ctx):
             chips.append(f'<span class="c o tip"{tip(LOGTIP["f"])}>파일 {s.get("files", 0)}</span>')
         lines = []
         for k, v in d["sw_add"]:
-            lines.append(f'<div><span class="c add">추가</span> <code>{esc(short(k))}</code> {"ON" if v else "OFF"}</div>')
+            lines.append(f'<div><span class="c add">추가</span> {kn("switch", short(k))} {"ON" if v else "OFF"}</div>')
         for k, v in d["sw_del"]:
-            lines.append(f'<div><span class="c del">삭제</span> <code>{esc(short(k))}</code></div>')
+            lines.append(f'<div><span class="c del">삭제</span> {kn("switch", short(k))}</div>')
         for k, a, b2 in d["sw_flip"]:
-            lines.append(f'<div><span class="c flip">{"켜짐" if b2 else "꺼짐"}</span> <code>{esc(short(k))}</code></div>')
+            lines.append(f'<div><span class="c flip">{"켜짐" if b2 else "꺼짐"}</span> {kn("switch", short(k))}</div>')
         for k, a, b2 in d["w_chg"]:
-            lines.append(f'<div><span class="c w">가중치</span> {esc(WLABEL.get(short(k), (short(k),))[0])} <b>{fmt(a)} → {fmt(b2)}</b>{" · vm" if k.startswith("vm-") else ""}</div>')
+            lines.append(f'<div><span class="c w">가중치</span> {kn("weight", short(k)) if short(k) not in WLABEL else esc(WLABEL[short(k)][0])} <b>{fmt(a)} → {fmt(b2)}</b>{" · vm" if k.startswith("vm-") else ""}</div>')
         for k, v in d["w_add"]:
-            lines.append(f'<div><span class="c w">가중치 추가</span> <code>{esc(short(k))}</code> = {fmt(v)}</div>')
+            lines.append(f'<div><span class="c w">가중치 추가</span> {kn("weight", short(k))} = {fmt(v)}</div>')
         for k, v in d["w_del"]:
-            lines.append(f'<div><span class="c del">가중치 삭제</span> <code>{esc(short(k))}</code></div>')
+            lines.append(f'<div><span class="c del">가중치 삭제</span> {kn("weight", short(k))}</div>')
         oc = d["other_chg"]
         if oc:
-            ex = ", ".join(esc(short(k)) for k, _, _ in oc[:8]) + (f" 외 {len(oc) - 8}개" if len(oc) > 8 else "")
-            lines.append(f'<div><span class="c o">설정</span> <code>{ex}</code></div>')
+            ex = ", ".join(kn("setting", short(k)) for k, _, _ in oc[:8]) + (f" 외 {len(oc) - 8}개" if len(oc) > 8 else "")
+            lines.append(f'<div><span class="c o">설정</span> {ex}</div>')
         dirs = ", ".join(f"{esc(n)} {c2}" for n, c2 in s.get("dirs", [])[:5])
         lines.append(f'<div class="f">바뀐 파일 {s.get("files", 0)}개 · {dirs}</div>')
         lines.append(f'<a href="{REPO_URL}/commit/{c["sha"]}" target="_blank" rel="noopener">GitHub에서 커밋 보기 ↗</a>')
@@ -694,10 +774,20 @@ def render(ctx):
             A(ev(c, d, s))
         A('</div></details>')
     nt = ctx["notable"]
-    A(f'<details class="more"><summary>README 공식 공지<span class="cnt">{len(nt)}건 · 원문'
-      + (f' · 최근 {esc(nt[0][0])}' if nt else "") + '</span></summary><div class="mb">')
+    n_all = sum(len(items) for _, items in nt)
+    n_ko = sum(1 for _, items in nt for x in items if KO_NOTE.get(x))
+    lab = "한국어 번역" if n_ko == n_all else ("영어 원문" if n_ko == 0 else f"번역 {n_ko}/{n_all}")
+    A(f'<details class="more"><summary>README 공식 공지<span class="cnt">{len(nt)}건 · {lab}'
+      + (f' · 최근 {esc(date_ko(nt[0][0]))}' if nt else "") + '</span></summary><div class="mb">')
+
+    def note_li(x):
+        ko = KO_NOTE.get(x)
+        if not ko:
+            return f'<li>{md_inline(x)}<div class="en">아직 번역 전이라 영어 원문이에요</div></li>'
+        return (f'<li>{md_inline(ko)}<details class="orig"><summary>원문 보기</summary>'
+                f'<div class="en">{md_inline(x)}</div></details></li>')
     for title, items in nt:
-        A(f'<div class="nu"><h4>{esc(title)}</h4><ul>' + "".join(f"<li>{md_inline(x)}</li>" for x in items) + '</ul></div>')
+        A(f'<div class="nu"><h4>{esc(date_ko(title))}</h4><ul>' + "".join(note_li(x) for x in items) + '</ul></div>')
     A('</div></details></section>')
     A(f'<footer>공개 코드 기본값 · <span class="w">실제 서비스 적용 여부는 확인할 수 없어요 · 추천 순위용 점수이고 수익 지급액과는 별개예요</span><br>'
       f'최신 커밋 {latest["sha"][:7]} ({lt:%Y-%m-%d %H:%M} 한국 시간) · 마지막 갱신 {now:%Y-%m-%d %H:%M} 한국 시간</footer>')

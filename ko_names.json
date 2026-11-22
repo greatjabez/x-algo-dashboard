@@ -1,0 +1,726 @@
+{
+ "_note": "코드 이름 → 쉬운 한국어. 없는 이름은 영어 코드 이름 그대로 보여줘요. switch 값은 [이름, 한 줄 설명]",
+ "switch": {
+  "AdsUserLoadEvenSpread": [
+   "광고 고르게 배치",
+   "사용자별 광고 부담을 피드 전체에 고르게 퍼뜨리는 것으로 보여요"
+  ],
+  "AuthorIsControl": [
+   "작성자 실험: 비교군",
+   "신규 작성자 콜드스타트 실험에서 이 작성자를 비교군(기존 방식)으로 분류"
+  ],
+  "AuthorIsTreatment": [
+   "작성자 실험: 실험군",
+   "신규 작성자 콜드스타트 실험에서 이 작성자를 실험군(새 방식)으로 분류"
+  ],
+  "AuthorPhoenixMoeEnabled": [
+   "작성자 MoE 모델 적용",
+   "작성자 단위로 Phoenix MoE 모델을 쓰는지 정하는 것으로 보여요 (추정)"
+  ],
+  "AuthorZeroFavCodivertIsControl": [
+   "좋아요 0개 글 실험: 비교군 작성자",
+   "좋아요 없는 글 처리 실험에서 작성자를 비교군으로 분류"
+  ],
+  "AuthorZeroFavCodivertIsTreatment": [
+   "좋아요 0개 글 실험: 실험군 작성자",
+   "좋아요 없는 글 처리 실험에서 작성자를 실험군으로 분류"
+  ],
+  "ComputeValueModel": [
+   "가치 모델 점수 계산",
+   "행동 예측값에 가중치를 곱해 최종 점수(가치 모델)를 계산"
+  ],
+  "DppEnabled": [
+   "유사 글 분산 (DPP)",
+   "DPP로 비슷한 글이 몰리지 않게 고름"
+  ],
+  "DppGreedyOrder": [
+   "DPP 순서대로 배치",
+   "DPP가 고른 순서를 그대로 피드 순서로 쓰는 것으로 보여요"
+  ],
+  "EnableAdAdjacentServedFilter": [
+   "광고 옆 본 글 필터",
+   "광고 주변에 이미 본 글이 오지 않게 거르는 필터로 보여요"
+  ],
+  "EnableAdsAuthorBrandSafetyFallback": [
+   "광고 안전 예비 판정",
+   "브랜드 안전 판정이 없을 때 작성자 기준으로 대신 판단"
+  ],
+  "EnableAdsBrandSafetyVerdictV2": [
+   "광고 안전 판정 v2",
+   "광고 옆에 붙어도 되는 글인지 새 판정 방식 사용"
+  ],
+  "EnableAdsFunnelTrace": [
+   "광고 흐름 추적",
+   "광고가 어느 단계에서 빠지는지 기록 (디버그용)"
+  ],
+  "EnableAdsHistoryXdcCacheWrite": [
+   "광고 이력 캐시 저장",
+   "광고 노출 이력을 캐시에 저장"
+  ],
+  "EnableAdsInjectionLogging": [
+   "광고 삽입 기록",
+   "광고를 피드에 넣은 내역을 로그로 남김"
+  ],
+  "EnableAdsOnlyTimeline": [
+   "광고만 보는 타임라인",
+   "지정된 테스트 계정에게 광고만 있는 타임라인을 보여줌"
+  ],
+  "EnableAdsSource": [
+   "광고 후보 소스",
+   "광고 후보를 가져와 피드에 섞음"
+  ],
+  "EnableAiTrendFeedbackContext": [
+   "AI 트렌드 피드백 정보",
+   "AI 트렌드 관련 피드백 정보를 글에 붙임"
+  ],
+  "EnableAllAuthorFollowHydration": [
+   "작성자 팔로우 정보 채우기",
+   "모든 작성자에 대해 팔로우 관계 정보를 불러옴"
+  ],
+  "EnableAuthorDiversity": [
+   "작성자 다양성",
+   "같은 작성자 글이 몰리지 않게 점수를 낮춤"
+  ],
+  "EnableAuthorServedMetricsExperimentBucket": [
+   "작성자 노출 통계 실험",
+   "작성자별 노출 통계를 실험 그룹별로 기록"
+  ],
+  "EnableBidirectionalFollowHydration": [
+   "맞팔 정보 채우기",
+   "서로 팔로우하는지 정보를 불러옴 (맞팔 보너스에 쓰임)"
+  ],
+  "EnableCachedPosts": [
+   "이전 추천 재사용",
+   "직전에 만든 추천 글 목록을 캐시에서 다시 씀"
+  ],
+  "EnableColdStartThompsonSampling": [
+   "신규 작성자 탐색 노출",
+   "노출이 적은 신규 작성자 글을 확률적으로 시험 노출 (톰슨 샘플링)"
+  ],
+  "EnableContextFeatures": [
+   "사용자 맥락 정보",
+   "팔로우한 주제·스타터팩·인구통계 같은 맥락 정보를 불러옴"
+  ],
+  "EnableEngagementCountsHydration": [
+   "반응 수 불러오기",
+   "글의 좋아요·답글 등 반응 수를 불러옴"
+  ],
+  "EnableEntryIdRandomHash": [
+   "항목 ID 무작위화",
+   "피드 항목 ID에 무작위 해시를 붙임 (기술용)"
+  ],
+  "EnableExplicitEngagementSignals": [
+   "직접 반응 신호",
+   "좋아요·답글 같은 명시적 반응 기록을 불러옴"
+  ],
+  "EnableFairShareRanking": [
+   "공정 배분 순위",
+   "점수 계산 전에 후보를 출처별로 비율 맞춰 남김"
+  ],
+  "EnableFavHoldout": [
+   "좋아요 많은 글 일부 보류",
+   "좋아요 수에 따라 일정 비율의 글을 실험적으로 빼 두는 필터"
+  ],
+  "EnableFeedSurvey": [
+   "피드 설문",
+   "피드 중간에 만족도 설문을 넣음"
+  ],
+  "EnableFollowingRepliedUsersFacepile": [
+   "팔로우한 사람 답글 프로필 모음",
+   "내가 팔로우한 사람이 답글 단 글에 프로필 사진 묶음을 표시"
+  ],
+  "EnableHomeExcursionScores": [
+   "홈 밖 행동 점수",
+   "영상 이어보기·프로필 방문 시간처럼 홈 피드 밖으로 나가서 하는 행동 예측을 점수에 넣음"
+  ],
+  "EnableImplicitEngagementSignals": [
+   "간접 반응 신호",
+   "머무름·클릭 같은 암묵적 반응 기록을 불러옴"
+  ],
+  "EnableInferredGenderHydration": [
+   "추정 성별 정보",
+   "모델이 추정한 성별 정보를 불러옴"
+  ],
+  "EnableInventoryHoldout": [
+   "일부 글 실험 보류",
+   "원글·답글·재게시 중 일정 비율을 실험용으로 빼 둠"
+  ],
+  "EnableIpFeature": [
+   "IP 정보 사용",
+   "접속 IP 기반 정보를 불러옴"
+  ],
+  "EnableJetfuelFrameGrokbotSuggestedTasks": [
+   "그록봇 추천 작업 칸",
+   "피드에 그록봇 추천 작업 칸을 넣음"
+  ],
+  "EnableJetfuelFrameMlbCarousel": [
+   "MLB 야구 칸",
+   "피드에 MLB 야구 캐러셀 칸을 넣음"
+  ],
+  "EnableJetfuelFrameNfl": [
+   "NFL 미식축구 칸",
+   "피드에 NFL 칸을 넣음"
+  ],
+  "EnableJetfuelFrameNflTimelinePinned": [
+   "NFL 칸 상단 고정",
+   "NFL 칸을 타임라인 위에 고정"
+  ],
+  "EnableJetfuelFrameNflTimelineRotation": [
+   "NFL 칸 순환 표시",
+   "NFL 칸을 돌아가며 보여줌"
+  ],
+  "EnableJetfuelFrameSoccer": [
+   "축구 칸",
+   "피드에 축구 칸을 넣음"
+  ],
+  "EnableJetfuelFrames": [
+   "특별 칸 전체",
+   "스포츠·그록봇 같은 특별 칸(프레임) 기능 전체 스위치"
+  ],
+  "EnableMutualFollowJaccardHydration": [
+   "팔로우 겹침 정도",
+   "나와 작성자의 팔로우 목록이 얼마나 겹치는지 계산"
+  ],
+  "EnableNewUserMinEngagementFilter": [
+   "신규 참여 필터",
+   "신규·복귀 계정에게 참여가 낮은 글을 걸러냄"
+  ],
+  "EnableNewUserSoftNsfwFilter": [
+   "신규 NSFW 필터",
+   "신규 계정 For You에서 소프트 NSFW 글을 걸러냄"
+  ],
+  "EnableOonRescoreForInNetworkRepliesRetweets": [
+   "팔로우 답글·재게시 재채점",
+   "팔로우한 사람의 답글·재게시를 비팔로우 글 기준으로 다시 채점"
+  ],
+  "EnablePageDecodeRerank": [
+   "페이지 디코드 재정렬",
+   "페이지 디코드로 타임라인 칸 순서를 다시 정함"
+  ],
+  "EnablePageLogging": [
+   "페이지 기록",
+   "보여준 피드 페이지 구성을 로그로 남김"
+  ],
+  "EnablePageRlExploration": [
+   "페이지 강화학습 탐색",
+   "피드 구성을 조금씩 바꿔 보며 학습하는 탐색 기능"
+  ],
+  "EnablePhoenixMOESource": [
+   "Phoenix MoE 후보 소스",
+   "Phoenix MoE 모델에서 추천 후보를 가져옴"
+  ],
+  "EnablePhoenixOonReplies": [
+   "비팔로우 답글 추천",
+   "팔로우 안 한 사람의 답글도 Phoenix 추천 후보에 넣음"
+  ],
+  "EnablePhoenixRequestCacheSideEffect": [
+   "Phoenix 요청 저장",
+   "Phoenix 모델 요청 내용을 캐시에 저장 (학습·분석용)"
+  ],
+  "EnablePhoenixRetrievalStatsExperimentBucket": [
+   "후보 검색 통계 실험",
+   "후보 검색 통계를 실험 그룹별로 기록"
+  ],
+  "EnablePhoenixScoreStatsExperimentBucket": [
+   "점수 통계 실험",
+   "점수 통계를 실험 그룹별로 기록"
+  ],
+  "EnablePhoenixSource": [
+   "Phoenix 후보 소스",
+   "Phoenix 모델에서 추천 후보를 가져옴"
+  ],
+  "EnablePopularPostsSource": [
+   "인기 글 후보 소스",
+   "인기 글 목록에서 추천 후보를 가져옴"
+  ],
+  "EnablePostEngagers": [
+   "반응한 사람 정보",
+   "글에 반응한 사람 정보를 불러옴"
+  ],
+  "EnablePrompts": [
+   "안내 메시지 칸",
+   "피드에 안내·권유 메시지(프롬프트)를 넣음"
+  ],
+  "EnablePublishSeenIdsToKafka": [
+   "본 글 기록 전송",
+   "사용자가 본 글 ID를 로그 시스템(Kafka)으로 보냄"
+  ],
+  "EnableQuotedVqvDurationCheck": [
+   "인용 영상 길이 확인",
+   "인용된 영상 시청 점수를 줄 때 영상 길이를 확인"
+  ],
+  "EnableRankerVmRank": [
+   "랭커 VM 순위",
+   "Phoenix 요청에 VM 순위를 넣어 다시 매김"
+  ],
+  "EnableRanking": [
+   "점수 순위 매기기",
+   "VM 랭커로 글 점수를 매김"
+  ],
+  "EnableRecentSearchQueriesHydration": [
+   "최근 검색어 정보",
+   "사용자의 최근 검색어를 불러옴"
+  ],
+  "EnableResponseDiversityStatsExperimentBucket": [
+   "다양성 통계 실험",
+   "피드 다양성 통계를 실험 그룹별로 기록"
+  ],
+  "EnableRetrievalSequenceHydration": [
+   "후보 검색용 행동 이력",
+   "후보 검색 모델에 줄 사용자 행동 이력을 불러옴"
+  ],
+  "EnableScoringSequenceHydration": [
+   "채점용 행동 이력",
+   "채점 모델에 줄 사용자 행동 이력을 불러옴"
+  ],
+  "EnableSemanticIdHydration": [
+   "글 의미 ID 정보",
+   "글 내용을 요약한 의미 ID를 불러옴"
+  ],
+  "EnableSerendipityStatsExperimentBucket": [
+   "뜻밖의 발견 통계 실험",
+   "새로운 관심사 노출 통계를 실험 그룹별로 기록"
+  ],
+  "EnableServedFilterAllRequests": [
+   "본 글 제외 (모든 요청)",
+   "이미 보여준 글을 모든 요청에서 걸러냄"
+  ],
+  "EnableSidSource": [
+   "의미 ID 후보 소스",
+   "의미 ID(SID)로 비슷한 글을 찾아 후보로 가져옴"
+  ],
+  "EnableSimclustersSource": [
+   "SimClusters 후보 소스",
+   "관심사 클러스터에서 추천 후보를 가져옴"
+  ],
+  "EnableTeacherScoreSideEffect": [
+   "AI 학습 점수",
+   "큰 모델의 점수를 저장해 작은 모델 학습에 써요. 노출에는 직접 영향 없음"
+  ],
+  "EnableTopicFeedbackContext": [
+   "주제 피드백 정보",
+   "주제 관련 피드백 정보를 글에 붙임"
+  ],
+  "EnableTweetMixerSource": [
+   "TweetMixer 후보 소스",
+   "TweetMixer에서 추천 후보를 가져옴"
+  ],
+  "EnableUnderTheHood": [
+   "타임라인 추적",
+   "타임라인 추적 요청을 허용"
+  ],
+  "EnableUnderTheHoodFrame": [
+   "추적 화면 표시",
+   "타임라인 추적 화면을 피드 맨 위에 넣음"
+  ],
+  "EnableUnderTheHoodSetting": [
+   "추적 사용자 설정",
+   "타임라인 추적을 사용자 설정에 따름"
+  ],
+  "EnableUrtMigrationComponents": [
+   "새 타임라인 구조 전환",
+   "본 글 이력·요청 시각 처리를 새 구조로 옮기는 작업용 (기술용)"
+  ],
+  "EnableUserInstalledAppsHydration": [
+   "설치 앱 정보",
+   "사용자 기기에 설치된 앱 정보를 불러옴"
+  ],
+  "EnableUserInstalledAppsV2": [
+   "설치 앱 정보 v2",
+   "설치 앱 정보를 새 방식으로 불러옴"
+  ],
+  "EnableVideoCarousel": [
+   "영상 캐러셀",
+   "For You 홈에 영상 캐러셀을 넣음"
+  ],
+  "EnableVideoCarouselAuthorDedupe": [
+   "캐러셀 같은 작성자 제외",
+   "캐러셀에 같은 작성자 영상이 겹치지 않게 함"
+  ],
+  "EnableVideoCarouselCandidatesLogging": [
+   "캐러셀 후보 기록",
+   "캐러셀 후보 영상을 로그로 남김"
+  ],
+  "EnableVideoCarouselCtrModel": [
+   "캐러셀 클릭률 모델",
+   "클릭률 예측 모델로 캐러셀 영상을 고름"
+  ],
+  "EnableVideoCarouselEmbeddingDedupe": [
+   "캐러셀 비슷한 영상 제외",
+   "내용이 비슷한 영상이 캐러셀에 겹치지 않게 함"
+  ],
+  "EnableVideoCarouselHeaderIcon": [
+   "캐러셀 제목 아이콘",
+   "캐러셀 제목 옆에 아이콘 표시"
+  ],
+  "EnableVideoCarouselHighRiskFilter": [
+   "고위험 영상 제외",
+   "고위험 브랜드 세이프티 영상을 캐러셀에서 제외"
+  ],
+  "EnableVideoCarouselMediumRiskFilter": [
+   "중위험 영상 제외",
+   "중위험 브랜드 세이프티 영상을 캐러셀에서 제외"
+  ],
+  "EnableVideoCarouselMoeOnly": [
+   "캐러셀 MoE만 사용",
+   "캐러셀 후보를 MoE 소스만 씀"
+  ],
+  "EnableVideoCarouselMoeSource": [
+   "캐러셀 MoE 소스",
+   "캐러셀 후보를 Phoenix MoE에서 가져옴"
+  ],
+  "EnableVideoCarouselSeenFilter": [
+   "본 영상 제외",
+   "이미 본 영상을 캐러셀에서 제외"
+  ],
+  "EnableVideoCarouselTakeFromFeed": [
+   "피드 영상 캐러셀로 옮기기",
+   "피드 후보 중 영상을 캐러셀로 가져옴"
+  ],
+  "EnableViewerColdStart": [
+   "신규 사용자 맞춤 처리",
+   "이력이 적은 신규 사용자용 추천 방식을 씀"
+  ],
+  "EnableWhoToFollowModule": [
+   "팔로우 추천 칸",
+   "피드에 '팔로우할 만한 계정' 칸을 넣음"
+  ],
+  "EnableXaiVfClient": [
+   "xAI 필터 클라이언트",
+   "어느 노출 필터 클라이언트를 쓸지 고름 (필터 자체 ON/OFF 아님)"
+  ],
+  "ExcludeIneligibleEngagementHeads": [
+   "유도 점수 제외",
+   "그 라벨이 있으면 해당 참여 점수를 빼고 계산"
+  ],
+  "HistoryTopicsEnabled": [
+   "최근 본 주제 정보",
+   "사용자가 최근 본 글의 주제를 채점에 씀"
+  ],
+  "LogSlateContext": [
+   "피드 구성 기록",
+   "함께 보여준 글 묶음 정보를 기록"
+  ],
+  "MultiplierPreOffset": [
+   "곱셈 전 보정",
+   "점수를 곱하기 전에 보정값을 먼저 더하는 계산 방식 (기술용)"
+  ],
+  "NewUserMinEngagementFilterUseRatio": [
+   "신규 참여 필터: 비율 기준",
+   "신규 참여 필터를 반응 수 대신 비율로 판단"
+  ],
+  "PhoenixMoeCodivertViewerIsControl": [
+   "MoE 실험: 비교군 사용자",
+   "MoE 관련 실험에서 보는 사람을 비교군으로 분류"
+  ],
+  "PhoenixMoeCodivertViewerIsTreatment": [
+   "MoE 실험: 실험군 사용자",
+   "MoE 관련 실험에서 보는 사람을 실험군으로 분류"
+  ],
+  "PhoenixOonRepliesRootOnly": [
+   "비팔로우 답글: 원글만",
+   "비팔로우 답글 추천 때 원글 쪽만 쓰는 것으로 보여요 (추정)"
+  ],
+  "PhoenixRetrievalExcludeSeenPosts": [
+   "후보 검색 때 본 글 제외",
+   "후보를 찾을 때 이미 본 글을 뺌"
+  ],
+  "PostUnexploredIncludeOutOfNetwork": [
+   "미탐색 보너스: 비팔로우 포함",
+   "새 글 탐색 보너스를 팔로우 안 한 계정 글에도 줌"
+  ],
+  "TopicDppEnabled": [
+   "주제 분산 (DPP)",
+   "같은 주제 글이 몰리지 않게 DPP로 섞음"
+  ],
+  "UseXdsForUas": [
+   "행동 이력 저장소 선택",
+   "사용자 행동 이력을 XDS 저장소에서 읽음 (기술용)"
+  ],
+  "UserDebiasEnabled": [
+   "사용자 성향 보정",
+   "사람마다 반응 습관 차이(잘 누르는 사람 등)를 보정해 예측값 조정"
+  ],
+  "VMRankerEnableFallback": [
+   "랭커 예비 경로",
+   "VM 랭커가 실패하면 예비 방식으로 점수 매김"
+  ],
+  "VMRankerSendDebiasInputs": [
+   "성향 보정 입력 전달",
+   "성향 보정용 정보를 랭커에 전달"
+  ],
+  "VMRankerSendDppHistory": [
+   "DPP 이력 전달",
+   "최근 본 글 이력을 DPP 분산용으로 랭커에 전달"
+  ],
+  "VMRankerSendEngagementIneligible": [
+   "유도 라벨 전달",
+   "답글·공유·클릭 유도 라벨을 랭커에 전달"
+  ],
+  "VMRankerSendHistoryTopics": [
+   "본 주제 이력 전달",
+   "최근 본 글 주제를 랭커에 전달"
+  ],
+  "VMRankerSendPacingInputs": [
+   "노출 속도 정보 전달",
+   "노출 조절(페이싱)용 정보를 랭커에 전달"
+  ],
+  "VMRankerSendPostTopics": [
+   "글 주제 전달",
+   "후보 글의 주제 정보를 랭커에 전달"
+  ],
+  "ViewerZeroFavCodivertIsTreatment": [
+   "좋아요 0개 글 실험: 실험군 사용자",
+   "좋아요 없는 글 처리 실험에서 보는 사람을 실험군으로 분류"
+  ],
+  "CachedPostsReuseWeightedScore": [
+   "재사용 글 점수 유지",
+   "캐시에서 다시 쓴 글의 기존 점수를 그대로 씀"
+  ],
+  "EnableCdwellOnImpr": [
+   "노출 기준 머문 시간",
+   "노출 기준으로 머문 시간 점수를 계산 (추정)"
+  ],
+  "EnableClickDwellLowFavRatePenalty": [
+   "클릭만 많은 글 감점",
+   "클릭 후 머무르지만 좋아요 비율이 낮은 글을 감점"
+  ],
+  "EnableMpnScoring": [
+   "MPN 채점",
+   "MPN 방식 채점 (의미 불확실)"
+  ],
+  "EnableMultiplicativePostUnexplored": [
+   "미탐색 보너스 곱셈 방식",
+   "새 글 탐색 보너스를 더하기 대신 곱하기로 적용"
+  ],
+  "EnablePhoenixRetrievalFallback": [
+   "후보 검색 예비 경로",
+   "Phoenix 후보 검색이 실패하면 예비 방식 사용"
+  ],
+  "EnableShuffledHistoryRetrieval": [
+   "섞은 이력으로 후보 검색",
+   "행동 이력 순서를 섞어 후보를 찾음"
+  ],
+  "EnableVMRanker": [
+   "VM 랭커 사용",
+   "VM 랭커 서비스로 점수를 매김"
+  ],
+  "PostUnexploredWeightInNetworkOnly": [
+   "미탐색 보너스: 팔로우만",
+   "새 글 탐색 보너스를 팔로우한 계정 글에만 줌"
+  ],
+  "UseEngagementCounterViewCountForImpressionBoost": [
+   "조회수로 노출 보너스 계산",
+   "노출 보너스 계산에 조회수 카운터를 씀"
+  ],
+  "UseServedSlateContext": [
+   "보여준 묶음 정보 사용",
+   "이미 보여준 글 묶음 정보를 채점에 씀"
+  ],
+  "VMRankerComputeValueModel": [
+   "랭커에서 가치 점수 계산",
+   "VM 랭커 안에서 가치 모델 점수를 계산"
+  ],
+  "VMRankerSendHeadWeights": [
+   "행동별 가중치 전달",
+   "행동별 가중치를 랭커에 전달"
+  ],
+  "VMRankerSendValueModelInputs": [
+   "가치 모델 입력 전달",
+   "가치 모델 입력값을 랭커에 전달"
+  ]
+ },
+ "weight": {
+  "ContActiveSecs5mResidualNormWeight": "5분 활동 시간 (보정값)",
+  "InNetworkDwellTimeWeightFactor": "팔로우 글 머문 시간 배율",
+  "InNetworkEngagementWeightFactor": "팔로우 글 반응 배율",
+  "NewUserOonWeightFactor": "신규 사용자 비팔로우 글 배율",
+  "OonDwellTimeWeightFactor": "비팔로우 글 머문 시간 배율",
+  "OonEngagementWeightFactor": "비팔로우 글 반응 배율",
+  "OonWeightFactor": "비팔로우 글 배율",
+  "ReactWithVideoWeight": "영상으로 반응",
+  "TopicOonWeightFactor": "주제 비팔로우 글 배율",
+  "VideoCarouselImmersiveVqvWeight": "캐러셀 전체화면 영상 시청",
+  "VideoCarouselNotInterestedWeight": "캐러셀 관심 없음",
+  "VideoCarouselOpenTimesImmersiveDwellWeight": "캐러셀 열기×전체화면 머문 시간",
+  "VideoCarouselVideoContinuationWeight": "캐러셀 영상 이어보기",
+  "VideoCarouselVideoOpenWeight": "캐러셀 영상 열기",
+  "VideoCarouselWeightedScoreWeight": "캐러셀 종합 점수",
+  "WeightPerturbationSigma": "가중치 흔들기 폭"
+ },
+ "setting": {
+  "AdsBlenderType": "광고 섞는 방식",
+  "AdsFollowingMinPosts": "광고 전 최소 팔로우 글 수",
+  "AdsHistoryCacheTtlSecs": "광고 이력 캐시 보관 시간",
+  "AdsOnlyTimelineViewerIds": "광고만 타임라인 대상 계정",
+  "AdsPageScoreHighThreshold": "광고 페이지 점수 상한 기준",
+  "AdsPageScoreKeepPct": "광고 페이지 점수 유지 비율",
+  "AdsPageScoreLowThreshold": "광고 페이지 점수 하한 기준",
+  "AdsPageScoreSpacing": "광고 페이지 점수 간격",
+  "AdsPageScoreTopK": "광고 페이지 점수 상위 개수",
+  "AdsTimeGapClampHi": "광고 시간 간격 최대",
+  "AdsTimeGapClampLo": "광고 시간 간격 최소",
+  "AdsTimeGapMinOrganicGap": "광고 사이 최소 일반 글 수",
+  "AdsTimeGapTSec": "광고 시간 간격(초)",
+  "AdsUserStateKeepPct": "사용자별 광고 유지 비율",
+  "AdsUserStateSpacing": "사용자별 광고 간격",
+  "AuthorDiversityDecay": "작성자 다양성 감소율",
+  "AuthorDiversityFloor": "작성자 다양성 최저값",
+  "AuthorExplorationBonus": "작성자 탐색 보너스",
+  "AuthorServedMetricsAuthorIds": "노출 통계 대상 작성자",
+  "ClickDwellLowFavRatePenaltyAlpha": "클릭만 많은 글 감점 세기",
+  "ClickDwellLowFavRatePenaltyBaseline": "클릭만 많은 글 감점 기준",
+  "ClickDwellLowFavRatePenaltyCap": "클릭만 많은 글 감점 최대",
+  "ClickDwellLowFavRatePenaltyFloor": "클릭만 많은 글 감점 최저",
+  "ColdStartBetaAlpha0": "신규 작성자 탐색 초기값 α",
+  "ColdStartBetaBeta0": "신규 작성자 탐색 초기값 β",
+  "ColdStartFollowerCap": "신규 작성자 팔로워 상한",
+  "ColdStartImpressionScale": "신규 작성자 노출 배율",
+  "ColdStartImpressionThreshold": "신규 작성자 노출 기준",
+  "ColdStartMaxPostAgeSecs": "신규 작성자 글 최대 나이",
+  "ColdStartSlotMax": "신규 작성자 칸 최대",
+  "ColdStartSlotMin": "신규 작성자 칸 최소",
+  "ColdStartTrackedIds": "신규 작성자 추적 계정",
+  "ColdStartTsTopK": "신규 작성자 탐색 상위 개수",
+  "DppMaxSelectedRank": "DPP 최대 선택 순위",
+  "DppTheta": "DPP 다양성 세기",
+  "DppWindow": "DPP 비교 범위",
+  "DppWindowHalfDistance": "DPP 범위 반감 거리",
+  "DppWindowSidLambda": "DPP 의미 ID 비중",
+  "DwellRegretAlphaFavorite": "후회 보정: 좋아요",
+  "DwellRegretAlphaQuote": "후회 보정: 인용",
+  "DwellRegretAlphaReply": "후회 보정: 답글",
+  "DwellRegretAlphaRetweet": "후회 보정: 재게시",
+  "DwellRegretAlphaShare": "후회 보정: 공유",
+  "DwellRegretAlphaShareViaCopyLink": "후회 보정: 링크 복사",
+  "DwellRegretAlphaShareViaDm": "후회 보정: DM 공유",
+  "DwellRegretDwellFloor": "후회 보정 머문 시간 최저",
+  "DwellRegretGateBias": "후회 보정 관문 편향",
+  "DwellRegretGateHysteresisBand": "후회 보정 관문 완충폭",
+  "DwellRegretGateThreshold": "후회 보정 관문 기준",
+  "DwellRegretGateWeights": "후회 보정 관문 가중치",
+  "DwellRegretNegBlockAuthor": "후회 보정: 차단",
+  "DwellRegretNegMuteAuthor": "후회 보정: 뮤트",
+  "DwellRegretNegNotInterested": "후회 보정: 관심 없음",
+  "DwellRegretNegReport": "후회 보정: 신고",
+  "DwellRegretTemperature": "후회 보정 온도",
+  "EngagementLabelsMaxCandidates": "반응 라벨 최대 후보 수",
+  "EngagementSignalsMaxPerType": "반응 신호 종류별 최대",
+  "ExcludeServedTweetIdsDuration": "본 글 제외 기간",
+  "ExcludeServedTweetIdsNumber": "본 글 제외 개수",
+  "FeedSurveyFatigueHours": "설문 재노출 간격(시간)",
+  "FeedSurveyFatigueMinutes": "설문 재노출 간격(분)",
+  "FollowingRepliedUsersFacepileMaxPosts": "답글 프로필 모음 최대 글",
+  "FollowingRepliedUsersFacepileMinUsers": "답글 프로필 모음 최소 인원",
+  "HistoryTopicsWindowDays": "본 주제 이력 기간(일)",
+  "InventoryHoldoutOriginalsPercent": "원글 보류 비율",
+  "InventoryHoldoutRepliesPercent": "답글 보류 비율",
+  "InventoryHoldoutRetweetsPercent": "재게시 보류 비율",
+  "JetfuelFrameGrokbotSuggestedTasksFatigueHours": "그록봇 칸 재노출 간격",
+  "LowImpressionsMaxPositionRatio": "저노출 글 최대 위치 비율",
+  "MaxPostsToCache": "캐시할 최대 글 수",
+  "MaxSeqLengthRetrieval": "후보 검색 이력 길이",
+  "MaxSeqLengthScoring": "채점 이력 길이",
+  "MinVideoDurationMs": "영상 최소 길이",
+  "MultiplicativePostUnexploredAlpha": "미탐색 보너스 곱셈 세기",
+  "MultiplicativeVmEngageBias": "곱셈 방식 반응 편향",
+  "NewUserAgeThresholdSecs": "신규 계정 기준 나이",
+  "NewUserMinEngagementFilterMaxAccountAgeSecs": "신규 참여 필터 계정 나이",
+  "NewUserMinEngagementFilterMaxResurrectionAgeSecs": "신규 참여 필터 복귀 기간",
+  "NewUserMinEngagementFilterMetric": "신규 참여 필터 기준 지표",
+  "NewUserMinEngagementThreshold": "신규 참여 필터 최소 반응",
+  "NewUserSoftNsfwFilterMaxAccountAgeSecs": "신규 NSFW 필터 계정 나이",
+  "NewUserSoftNsfwFilterMaxScoringSeqLength": "신규 NSFW 필터 이력 길이",
+  "NotDwelledPowerExponent": "안 머묾 지수",
+  "NotDwelledPowerOffset": "안 머묾 보정값",
+  "PageDecodeEta": "페이지 디코드 학습률",
+  "PageDecodePoolN": "페이지 디코드 후보 수",
+  "PageDecodePriorTau": "페이지 디코드 사전값",
+  "PageDecodeRewardHead": "페이지 디코드 보상 기준",
+  "PageDecodeSteps": "페이지 디코드 단계 수",
+  "PageDecodeTemperature": "페이지 디코드 온도",
+  "PageLogTtlSeconds": "페이지 기록 보관 시간",
+  "PageRlExplorationTemperature": "페이지 탐색 온도",
+  "PageRlExplorationTopK": "페이지 탐색 상위 개수",
+  "PhoenixAggregationType": "Phoenix 집계 방식",
+  "PhoenixColdStartMaxResults": "Phoenix 신규 사용자 후보 수",
+  "PhoenixExperimentOverrides": "Phoenix 실험 덮어쓰기",
+  "PhoenixInferenceClusterId": "Phoenix 서버 지정",
+  "PhoenixMOEMaxResults": "Phoenix MoE 후보 수",
+  "PhoenixMaxResults": "Phoenix 후보 수",
+  "PhoenixMoeColdStartMaxResults": "MoE 신규 사용자 후보 수",
+  "PhoenixRankerNewUserHistoryThreshold": "랭커 신규 사용자 이력 기준",
+  "PhoenixRankerNewUserInferenceClusterId": "랭커 신규 사용자 서버",
+  "PhoenixRequestCacheSideEffectTtlSeconds": "Phoenix 요청 보관 시간",
+  "PhoenixRetrievalAggregationType": "후보 검색 집계 방식",
+  "PhoenixRetrievalDatasetTopK": "후보 검색 데이터 상위 개수",
+  "PhoenixRetrievalInferenceClusterId": "후보 검색 서버",
+  "PhoenixRetrievalMOEInferenceClusterId": "MoE 후보 검색 서버",
+  "PhoenixRetrievalNewUserHistoryThreshold": "후보 검색 신규 사용자 기준",
+  "PhoenixRetrievalNewUserInferenceClusterId": "후보 검색 신규 사용자 서버",
+  "PhoenixRetrievalTopicInferenceClusterId": "주제 후보 검색 서버",
+  "PhoenixScoresResultSize": "Phoenix 점수 결과 수",
+  "PhoenixXdsRetrievalMaxRetries": "후보 검색 재시도 횟수",
+  "PhoenixXdsRetrievalUncompressedClustersList": "비압축 후보 검색 서버 목록",
+  "PopularPostsMaxPerAuthor": "인기 글 작성자당 최대",
+  "PopularPostsMaxRepliesRepostsPerAuthor": "인기 글 작성자당 답글·재게시 최대",
+  "PopularPostsMaxResults": "인기 글 후보 수",
+  "PopularPostsTopAuthors": "인기 글 상위 작성자 수",
+  "PostTopicsMaxCandidates": "글 주제 최대 후보 수",
+  "PostTopicsTimeoutMs": "글 주제 시간 제한",
+  "RecentViewsRows": "최근 본 글 행 수",
+  "RecentViewsSequenceLength": "최근 본 글 이력 길이",
+  "RerankerHeadTag": "재정렬 기준 태그",
+  "RetrievalCandidatesKafkaMaxCandidates": "후보 기록 최대 개수",
+  "RetrievalCandidatesKafkaSamplePercent": "후보 기록 샘플 비율",
+  "RetrievalValueModelWeights": "후보 검색 가치 가중치",
+  "ShadowTrafficDefaultPercent": "그림자 트래픽 기본 비율",
+  "ShadowTrafficPhoenixClusterAggregationTypes": "그림자 트래픽 집계 방식",
+  "ShadowTrafficPhoenixClusterRates": "그림자 트래픽 서버별 비율",
+  "ShadowTrafficPhoenixClustersList": "그림자 트래픽 서버 목록",
+  "ShadowTrafficPhoenixRetrievalClustersList": "그림자 트래픽 검색 서버 목록",
+  "SidServerEndpoint": "의미 ID 서버 주소",
+  "SidSourceMaxPerSeed": "의미 ID 시드당 최대",
+  "SidSourceMaxResults": "의미 ID 후보 수",
+  "SidSourceMaxSeeds": "의미 ID 시드 수",
+  "SidSourceMinPrefixDepth": "의미 ID 최소 일치 깊이",
+  "SimclustersMaxCandidateAgeHours": "SimClusters 글 최대 나이",
+  "TeacherActionIndices": "AI 학습 점수 행동 목록",
+  "TeacherPhoenixCluster": "AI 학습 점수 서버",
+  "TeacherSampleBps": "AI 학습 점수 샘플 비율",
+  "TeacherTimeoutMs": "AI 학습 점수 시간 제한",
+  "TeacherTopK": "AI 학습 점수 상위 개수",
+  "TeacherTtlSeconds": "AI 학습 점수 보관 시간",
+  "ThunderAlgorithm": "Thunder 알고리즘",
+  "ThunderClusterId": "Thunder 서버",
+  "ThunderMaxResults": "Thunder 후보 수",
+  "TopicFilteringId": "주제 필터 ID",
+  "TopicFilteringOverrides": "주제 필터 덮어쓰기",
+  "TweetMixerMaxResults": "TweetMixer 후보 수",
+  "UasSourceDataType": "행동 이력 데이터 종류",
+  "UserActionsClusterId": "행동 이력 서버",
+  "UserDebiasAlpha": "성향 보정 세기",
+  "UserDebiasClipLogit": "성향 보정 한계",
+  "UserDebiasHeadAlpha": "행동별 성향 보정 세기",
+  "UserDebiasHeadClipLogit": "행동별 성향 보정 한계",
+  "UserDebiasHeads": "성향 보정 대상 행동",
+  "UserDebiasMaxArtifactAgeSecs": "성향 보정 모델 최대 나이",
+  "VMRankerClusterId": "VM 랭커 서버",
+  "VMRankerDppHistoryMaxItems": "랭커 DPP 이력 최대",
+  "VMRankerDppMaxSelectedRank": "랭커 DPP 최대 순위",
+  "VMRankerDppTheta": "랭커 DPP 다양성 세기",
+  "VMRankerValueModelId": "랭커 가치 모델 ID",
+  "ValueModelMode": "가치 모델 계산 방식",
+  "VideoCarouselCtrModelName": "캐러셀 클릭률 모델 이름",
+  "VideoCarouselEmbeddingDedupeThreshold": "캐러셀 비슷한 영상 기준",
+  "VideoCarouselEmbeddingVersion": "캐러셀 영상 임베딩 버전",
+  "VideoCarouselExtraCandidates": "캐러셀 추가 후보 수",
+  "VideoCarouselFatigueMinutes": "캐러셀 재노출 간격",
+  "VideoCarouselImmersiveAggregationType": "캐러셀 전체화면 집계 방식",
+  "VideoCarouselImmersiveClusterId": "캐러셀 전체화면 서버",
+  "VideoCarouselPosition": "캐러셀 위치",
+  "VideoCarouselSemanticIdDedupeLevels": "캐러셀 의미 ID 중복 기준",
+  "WeightPerturbationSalt": "가중치 흔들기 시드",
+  "WhoToFollowFatigueHours": "팔로우 추천 재노출 간격"
+ }
+}
