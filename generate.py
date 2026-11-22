@@ -580,7 +580,10 @@ details.ev>summary{display:flex;align-items:center;gap:6px;padding:7px 10px;flex
 .bl{font-size:10.5px;color:var(--dim);font-weight:800;margin-right:2px}
 .bc{font-size:11px;padding:1px 6px;border-radius:6px;background:#151c25;border:1px dashed #2f4256;color:#b9c6d2;text-decoration:none;white-space:nowrap}
 .bc b{color:#e8f4ff;font-variant-numeric:tabular-nums}
-.bc.neg b{color:var(--red)}.bc.on b{color:var(--on)}
+.bc.neg b{color:var(--red)}
+.arw{color:var(--mint);font-weight:900}.res{color:#d9fbe9}
+.srcl{margin-top:5px;font-size:10.5px;color:#7d8d9c;overflow-wrap:anywhere;line-height:1.5}
+.srcl code{font-size:10px;color:#8fb3cf}.bc.on b{color:var(--on)}
 .ocr{border-color:rgba(255,196,107,.35)}
 .elig{margin-top:8px;padding-top:6px;border-top:1px solid var(--line)}
 @media(min-width:900px){.tcs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 8px;align-items:start}}
@@ -866,22 +869,19 @@ OCR_ARCHIVE = "https://web.archive.org/web/20261019152944/https://help.x.com/en/
 OCR_CHECKED = "2026-11-22"
 VIDEO_W = ["VqvWeight", "VideoOpenWeight", "QuotedVqvWeight", "PostVideoWeight"]
 BAIT_SW = ["home-mixer:VMRankerSendEngagementIneligible", "vm-ranker:ExcludeIneligibleEngagementHeads"]
-CREATOR_SW = {  # 스위치 이름: (켜졌을 때, 꺼졌을 때) 크리에이터에게 뜻하는 것
-    "VMRankerSendEngagementIneligible": ("답글·공유·클릭을 유도하는 글의 라벨이 순위 모델로 넘어가요. 유도 문구는 피하는 게 좋아요",
-                                         "유도 글 라벨을 순위 모델로 넘기는 장치예요. 아직 꺼져 있지만, 켜지면 유도 글이 손해를 볼 수 있어요"),
-    "ExcludeIneligibleEngagementHeads": ("유도 라벨이 붙은 글은 그 반응 점수를 못 받아요. 유도 문구는 피하세요",
-                                         "유도 라벨이 붙은 글에서 그 반응 점수를 빼는 장치예요. 아직 꺼져 있어요"),
-    "EnableAuthorDiversity": ("같은 사람 글이 한 피드에 몰리면 뒤 글의 점수가 줄어요. 몰아 올리기보다 간격을 두세요",
-                              "같은 사람 글이 몰려도 점수를 깎지 않아요"),
-    "DppEnabled": ("비슷한 글이 한 피드에 몰리지 않게 섞어요. 같은 얘기만 반복하기보다 각도를 바꿔보세요", "비슷한 글 섞기가 꺼졌어요"),
-    "TopicDppEnabled": ("같은 주제 글이 몰리지 않게 섞어요. 한 주제만 반복하면 덜 유리할 수 있어요",
-                        "같은 주제 글을 섞는 장치예요. 아직 꺼져 있어서 지금 영향은 없어요"),
-    "VMRankerSendDppHistory": ("최근 본 글 이력을 보고 비슷한 글을 덜 보여줘요. 같은 얘기를 반복하면 덜 유리할 수 있어요",
-                               "최근 본 글과 비슷한 글을 덜 보여주는 장치예요. 지금은 꺼져 있어요"),
-    "EnableNewUserMinEngagementFilter": ("새로 온 사용자에겐 반응이 적은 글이 덜 보여요", "새로 온 사용자 대상 필터가 꺼졌어요"),
-    "NewUserMinEngagementFilterUseRatio": ("새로 온 사용자 필터가 반응 '수' 대신 '비율'을 봐요. 팔로워가 적어도 반응 비율이 좋으면 덜 걸러질 수 있어요",
-                                           "새로 온 사용자 필터가 반응 수를 기준으로 봐요"),
-    "EnableNewUserSoftNsfwFilter": ("새로 온 사용자 피드에선 선정적인 글이 걸러져요", "새로 온 사용자 대상 선정성 필터예요. 아직 꺼져 있어요"),
+CREATOR_SW = {  # 스위치 이름: (켜졌을 때, 꺼졌을 때). 코드가 하는 일만 적는다
+    "VMRankerSendEngagementIneligible": ("답글·공유·클릭 유도 라벨을 vm-ranker로 보내요. 점수 제외 스위치도 켜져야 점수가 빠져요",
+                                         "꺼져 있어요. 켜지고 점수 제외 스위치도 켜지면, 유도 라벨이 붙은 글은 답글·공유·클릭 예측 점수가 빠져요"),
+    "ExcludeIneligibleEngagementHeads": ("유도 라벨이 붙은 글은 답글·공유·클릭 예측 점수가 빠져서 노출 순위가 덜 올라가요",
+                                         "꺼져 있어요. 켜지면 유도 라벨이 붙은 글은 답글·공유·클릭 예측 점수가 빠져요 (감점이 아니라 플러스가 빠짐)"),
+    "EnableAuthorDiversity": ("같은 작성자 글이 한 피드 후보에 몰리면 두 번째 글부터 노출 순위가 낮아져요", "같은 작성자 글이 몰려도 이 장치로 낮아지지 않아요"),
+    "DppEnabled": ("내용이 비슷한 후보끼리 함께 뽑히기 어려워져요", "비슷한 글을 섞는 단계가 꺼졌어요"),
+    "TopicDppEnabled": ("같은 주제 후보끼리 함께 뽑히기 어려워져요", "꺼져 있어요. 켜지면 같은 주제 후보끼리 함께 뽑히기 어려워져요"),
+    "VMRankerSendDppHistory": ("최근 본 글 이력을 DPP에 보내요. 최근 본 글과 비슷한 후보는 함께 뽑히기 어려워져요",
+                               "꺼져 있어요. 켜지면 최근 본 글 이력이 DPP 분산에 쓰여요"),
+    "EnableNewUserMinEngagementFilter": ("새로 온·돌아온 사용자 피드에서 반응이 기준보다 적은 글을 걸러요", "새로 온 사용자 대상 최소 반응 필터가 꺼졌어요"),
+    "NewUserMinEngagementFilterUseRatio": ("새로 온 사용자 대상 최소 반응 필터가 반응 수 대신 비율로 판단해요", "최소 반응 필터가 반응 수로 판단해요"),
+    "EnableNewUserSoftNsfwFilter": ("새로 온 사용자 피드에서 소프트 NSFW 글을 걸러요", "꺼져 있어요. 켜지면 새로 온 사용자 피드에서 소프트 NSFW 글을 걸러요"),
 }
 SKIP_SW = ("Ads", "Logging", "Experiment", "Stats", "Trace", "UnderTheHood", "Teacher")
 
@@ -918,119 +918,168 @@ def render_tips(ctx):
     def onoff(k):
         return "켜져 있어요" if sw.get(k) else "꺼져 있어요"
 
-    def card(title, how, basis, chg="", rank=True):
-        return {"title": title, "how": how, "basis": basis, "chg": chg, "rank": rank}
+    def card(title, how, basis, chg="", rank=True, src=""):
+        return {"title": title, "how": how, "basis": basis, "chg": chg, "rank": rank, "src": src}
 
+    src_dir = ctx.get("src") or ""
+
+    def src_text(rel):
+        try:
+            return open(os.path.join(src_dir, rel), encoding="utf-8").read()
+        except Exception:
+            return ""
+    hm_txt = src_text(HM)
+
+    def L(fact, res):  # 코드 사실 → 노출 순위 결과
+        return f'{fact} <span class="arw">→</span> <span class="res">{res}</span>'
+
+    def S(*items):  # 출처 표시
+        return " · ".join(f"<code>{esc(x)}</code>" if ("/" in x or x.endswith(".rs") or x[:1].isupper()) else esc(x) for x in items)
+
+    WSRC = "home-mixer/params/param.rs"
+    VSRC = "xai-value-model/scoring.rs"
     pos_cards = []  # (정렬값, 카드)
-    # 1) 공유하고 싶은 글
+    # 1) 공유
     sh = [n for n in ("ShareViaCopyLinkWeight", "ShareViaDmWeight", "ShareWeight") if W.get(n, 0) > 0]
     if sh:
         top = max(sh, key=lambda n: W[n])
-        how = ["꿀팁, 정리, 체크리스트, 비교표처럼 <b>저장해 두거나 친구에게 보내고 싶은 글</b>을 만들어보세요",
-               "핵심을 한 화면 안에 정리하고, 출처나 근거를 같이 적으면 믿고 퍼가기 좋아요"]
-        if top == "ShareViaCopyLinkWeight":
-            how.insert(0, f"지금 코드에서 가장 큰 플러스 신호 중 하나가 <b>링크 복사 공유({fmt(W[top])})</b>예요. 다른 곳에 퍼가고 싶은 글이 유리해요")
-        pos_cards.append((W[top], card("📤 보내고 싶은 글을 만드세요", how, [chip(n) for n in sh], recent(sh))))
-    # 2) 대화가 이어지는 글
+        how = [L(f"{ko_label(n)} 예측 확률 × <b>{fmt(W[n])}</b>", "공유될 것으로 예측되는 글의 노출 순위가 높아져요" if i == 0 else f"{ko_label(n)} 예측이 높은 글도 노출 순위가 높아져요")
+               for i, n in enumerate(sorted(sh, key=lambda n: -W[n]))]
+        pos_cards.append((W[top], card("📤 공유가 예측되는 글은 노출 순위가 높아져요", how, [chip(n) for n in sh], recent(sh),
+                                       src=S(WSRC, *sh, VSRC))))
+    # 2) 답글 + 맞팔 보너스
     rp, bo = W.get("ReplyWeight"), W.get("BidirectionalFollowReplyWeightBoost")
     if rp and rp > 0:
-        b = [chip("ReplyWeight")]
-        how = ["글 끝에 <b>자연스럽게 의견을 묻는 질문</b>을 붙여보세요. 정답이 하나가 아닌 질문이 좋아요",
-               "달린 답글에 답해주면 대화가 길어져요"]
+        how = [L(f"답글 예측 확률 × <b>{fmt(rp)}</b>", "답글이 예측되는 글의 노출 순위가 높아져요")]
+        b, sn = [chip("ReplyWeight")], ["ReplyWeight"]
         val = rp
         if bo and bo > 0:
             val = rp + bo
-            how.insert(1, f"서로 팔로우하는 사람이 단 답글은 보너스가 붙어 <b>{fmt(rp)}+{fmt(bo)}={fmt(val)}</b>이 돼요. 평소 맞팔 이웃과 꾸준히 소통해두면 좋아요")
+            how.append(L(f"글을 보는 사람과 작성자가 <b>서로 팔로우</b>하고 그 글이 <b>답글·재게시가 아닌 원글</b>이면 답글 예측 확률 × <b>{fmt(rp)}+{fmt(bo)}={fmt(val)}</b>",
+                         "맞팔 관계의 사람에게 보이는 원글은 답글 쪽 노출 순위가 더 크게 높아져요"))
             b.append(chip("BidirectionalFollowReplyWeightBoost", "맞팔 답글 보너스", t=WTIP["__mutual"]))
-        pos_cards.append((val, card("💬 대화가 이어지는 글을 쓰세요", how, b, recent(["ReplyWeight", "BidirectionalFollowReplyWeightBoost"]))))
+            sn.append("BidirectionalFollowReplyWeightBoost")
+        pos_cards.append((val, card("💬 답글이 예측되는 글, 맞팔 원글은 더 높아져요", how, b, recent(sn),
+                                    src=S(WSRC, *sn, "xai-value-model/weights.rs (reply_weight_for)", "xai-value-model/inputs.rs (bidirectional_boost_eligible)"))))
     # 3) 인용
     if W.get("QuoteWeight", 0) > 0:
-        pos_cards.append((W["QuoteWeight"], card("🔁 한마디 보태고 싶은 글", [
-            "사람마다 생각이 갈릴 만한 주제, 내 경험이 담긴 관점은 <b>인용하며 의견을 덧붙이기</b> 좋아요",
-            "다만 싸움을 붙이는 글은 뮤트·신고로 이어질 수 있어요. 논쟁보다 관점을 보여주세요"],
-            [chip("QuoteWeight")], recent(["QuoteWeight"]))))
+        pos_cards.append((W["QuoteWeight"], card("🔁 인용이 예측되는 글은 노출 순위가 높아져요", [
+            L(f"인용 예측 확률 × <b>{fmt(W['QuoteWeight'])}</b>", "인용될 것으로 예측되는 글의 노출 순위가 높아져요")],
+            [chip("QuoteWeight")], recent(["QuoteWeight"]), src=S(WSRC, "QuoteWeight", VSRC))))
     # 4) 팔로우
     if W.get("FollowAuthorWeight", 0) > 0:
-        pos_cards.append((W["FollowAuthorWeight"], card("👤 팔로우할 이유를 보여주세요", [
-            "한두 가지 주제를 꾸준히 다루면 '이 사람 글 더 보고 싶다'는 이유가 생겨요",
-            "시리즈물(1편·2편)이나 정기 코너를 만들고, 프로필 소개에 무엇을 올리는 계정인지 적어두세요"],
-            [chip("FollowAuthorWeight")], recent(["FollowAuthorWeight"]))))
+        pos_cards.append((W["FollowAuthorWeight"], card("👤 작성자 팔로우가 예측되는 글은 노출 순위가 높아져요", [
+            L(f"글을 보고 작성자를 팔로우할 확률 × <b>{fmt(W['FollowAuthorWeight'])}</b>", "보는 사람이 작성자를 팔로우할 것으로 예측되는 글의 노출 순위가 높아져요")],
+            [chip("FollowAuthorWeight")], recent(["FollowAuthorWeight"]), src=S(WSRC, "FollowAuthorWeight", VSRC))))
     pos_cards.sort(key=lambda x: -x[0])
     cards = [c for _, c in pos_cards]
     # 5) 좋아요
     fv = W.get("FavoriteWeight")
-    if fv is not None and pos_cards:
+    if fv is not None and fv > 0 and pos_cards:
         mx = pos_cards[0][0]
+        how = [L(f"좋아요 예측 확률 × <b>{fmt(fv)}</b>", "좋아요가 예측되는 글도 노출 순위가 높아져요")]
         if fv < mx:
-            cards.append(card("❤️ 좋아요만 노리진 마세요", [
-                f"좋아요 가중치는 <b>{fmt(fv)}</b>로, 가장 큰 신호({fmt(mx)})보다 훨씬 작아요",
-                "좋아요가 많이 붙는 가벼운 글보다, 공유·답글·끝까지 읽기가 나오는 글이 순위엔 더 도움이 돼요"],
-                [chip("FavoriteWeight")] + ([chip("RetweetWeight")] if "RetweetWeight" in W else []),
-                recent(["FavoriteWeight", "RetweetWeight"]), False))
-        else:
-            cards.append(card("❤️ 좋아요도 큰 신호예요", [f"지금 코드에선 좋아요 가중치(<b>{fmt(fv)}</b>)가 가장 큰 플러스 신호와 비슷하거나 더 커요"],
-                              [chip("FavoriteWeight")], recent(["FavoriteWeight"]), False))
+            how.append(L(f"같은 예측 확률이라면 가장 큰 값({fmt(mx)})보다 곱하는 값이 작아요", "좋아요 예측만으로는 노출 순위가 덜 높아져요"))
+        sn = ["FavoriteWeight"] + (["RetweetWeight"] if W.get("RetweetWeight", 0) > 0 else [])
+        if "RetweetWeight" in sn:
+            how.append(L(f"재게시 예측 확률 × <b>{fmt(W['RetweetWeight'])}</b>", "재게시가 예측되는 글의 노출 순위가 높아져요"))
+        cards.append(card("❤️ 좋아요·재게시 예측은 곱하는 값이 작아요" if fv < mx else "❤️ 좋아요 예측도 크게 반영돼요", how,
+                          [chip(n) for n in sn], recent(sn), False, src=S(WSRC, *sn, VSRC)))
     # 6) 머무름
-    dws = [n for n in DWELL if n in W and n != "NotDwelledWeight" and W[n] > 0]
+    dws = [n for n in ("DwellWeight", "ContDwellTimeWeight", "ContClickDwellTimeWeight") if W.get(n, 0) > 0]
     if dws:
-        how = ["<b>첫 줄</b>에서 멈추게 하고, 본문은 끝까지 읽을 이유가 있게 알차게 채워보세요",
-               "긴 글은 줄바꿈과 소제목으로 읽기 편하게 나누세요"]
-        nt = ctx.get("notable") or []
-        hits = [date_ko(t) for t, items in nt if any(re.search(r"all the way through|time spent|dwell", x, re.I) for x in items)]
-        if hits:
-            how.append("README 공지(" + ", ".join(hits[:2]) + ")에 따르면 머무는 시간과 끝까지 읽기를 예측하는 모델이 좋아졌어요. 낚시 첫 줄로 들어왔다가 바로 나가는 글은 오히려 불리할 수 있어요")
+        how = []
+        if "DwellWeight" in dws:
+            how.append(L(f"AI가 예측한 '글에서 멈춰 읽을 확률' × <b>{fmt(W['DwellWeight'])}</b>", "멈춰 읽힐 것으로 예측되는 글의 노출 순위가 높아져요"))
+        if "ContDwellTimeWeight" in dws:
+            how.append(L(f"AI가 예측한 '글에 머무를 시간' × <b>{fmt(W['ContDwellTimeWeight'])}</b>", "오래 머물 것으로 예측되는 글의 노출 순위가 높아져요"))
+        if "ContClickDwellTimeWeight" in dws:
+            how.append(L(f"AI가 예측한 '글을 눌러 들어간 뒤 머무를 시간' × <b>{fmt(W['ContClickDwellTimeWeight'])}</b>",
+                         "눌러서 오래 볼 것으로 예측되는 글의 노출 순위가 높아져요. 이 시간에 답글 읽는 시간이 포함되는지는 코드에 정해져 있지 않아요"))
         if W.get("NotDwelledWeight", 0) < 0:
-            how.append(f"그냥 스크롤로 넘길 것 같은 글엔 작은 감점({fmt(W['NotDwelledWeight'])})도 있어요")
+            how.append(L(f"그냥 넘길 것으로 예측되는 확률 × <b>{fmt(W['NotDwelledWeight'])}</b>", "바로 넘겨질 것으로 예측되는 글은 노출 순위가 조금 낮아져요"))
+        how.append("모두 <b>실제로 잰 시간이 아니라 AI가 예측한 값</b>에 곱해요. 시간 단위(초 등)는 코드에서 확인되지 않아요")
+        rs = [S(WSRC, *dws, VSRC)]
+        nt = ctx.get("notable") or []
+        for t, items in nt:
+            for x in items:
+                if re.search(r"time spent", x, re.I):
+                    how.append(L(f"README 공지({esc(date_ko(t))}): 순위 모델이 글마다 머무를 시간을 더 잘 예측하게 됐어요", "머무를 시간 예측이 노출 순위에 더 정확히 반영돼요"))
+                    rs.append(f"README {esc(date_ko(t))}")
+                elif re.search(r"all the way through", x, re.I):
+                    how.append(L(f"README 공지({esc(date_ko(t))}): 후보를 고르는 단계(Phoenix retrieval)가 끝까지 읽힌 글을 찾도록 학습됐어요", "끝까지 읽힐 것으로 보이는 글이 추천 후보에 더 잘 올라요"))
+                    rs.append(f"README {esc(date_ko(t))}")
         b = [chip(n) for n in dws] + ([chip("NotDwelledWeight")] if "NotDwelledWeight" in W else [])
-        cards.append(card("⏱️ 끝까지 읽히는 글", how, b, recent(DWELL), False))
+        cards.append(card("⏱️ 머무를 것으로 예측되는 글은 노출 순위가 높아져요", how, b, recent(DWELL), False, src=" · ".join(rs)))
     # 7) 마이너스
     ng = [n for n in NEG if W.get(n, 0) < 0]
     if ng:
-        cards.append(card("🚫 낚시·도배·과장은 피하세요", [
-            "제목 낚시, 과장, 같은 글 도배는 <b>신고·뮤트·관심 없음</b>을 부르고, 이 감점은 플러스 신호보다 훨씬 커요",
-            "숫자는 실제 신고 횟수가 아니라 그런 반응이 나올 <b>예측 확률</b>에 곱해요. 신고 1번이 좋아요 수백 개를 지운다는 뜻은 아니에요"],
-            [chip(n) for n in ng], recent(ng), False))
-    # 8) 유도 문구
-    bait = [k for k in BAIT_SW if k in sw]
-    if bait:
-        n_on = sum(1 for k in bait if sw[k])
-        state = "지금 코드에선 켜져 있어요" if n_on == len(bait) else ("지금 코드에선 꺼져 있어요" if n_on == 0 else "지금 코드에선 일부만 켜져 있어요")
-        how = ["'답글 달아주세요', '공유 부탁해요', '눌러보세요' 같은 <b>반응 유도 문구</b>는 빼세요",
-               f"코드에 유도 글에 라벨을 붙여 답글·공유·클릭 점수를 빼는 장치가 있어요. {state}"
-               + (". 켜지면 유도 글은 손해를 볼 수 있어요" if n_on < len(bait) else ""),
-               "OCR 규칙에서도 반응을 계속 요구하는 건 위반이에요"]
-        b = [f'<span class="bc tip{" on" if sw[k] else ""}"{tip(((sw_ko(short(k)) or ("", ""))[1] or short(k)) + " (" + short(k) + ")")}>{esc((sw_ko(short(k)) or (short(k),))[0])} <b>{"ON" if sw[k] else "OFF"}</b></span>' for k in bait]
-        cards.append(card("🙅 반응을 조르지 마세요", how, b, "", False))
-    # 9) 간격 두기
+        how = [L(f"{ko_label(n)} 예측 확률 × <b>{fmt(W[n])}</b>", "이 반응이 예측되는 글은 노출 순위가 낮아져요") for n in ng[:1]]
+        how += [L("다른 부정 반응 예측 확률에도 음수를 곱해요: " + ", ".join(f"{ko_label(n)} × <b>{fmt(W[n])}</b>" for n in ng[1:]), "이런 반응이 예측되는 글도 노출 순위가 낮아져요")] if len(ng) > 1 else []
+        if re.search(r"1000x lower", hm_txt):
+            how.append("코드 주석: 신고는 좋아요보다 일어날 확률이 1000배 넘게 낮아서, 예측이 순위에 영향을 주도록 큰 값을 쓴다고 해요. <b>신고 1번이 좋아요 수백 개를 지운다는 뜻은 아니에요</b>")
+        if re.search(r"personalized", hm_txt):
+            how.append(L("코드 주석: 추천은 개인화돼 있어서 신고 예측은 주로 신고한 사람과 비슷한 사용자의 추천에 영향을 줘요", "몇몇 사람의 대량 신고가 모두에게 같은 영향을 주진 않아요"))
+        cards.append(card("🚫 신고·뮤트·관심 없음·차단이 예측되면 낮아져요", how, [chip(n) for n in ng], recent(ng), False,
+                          src=S(WSRC, *ng, "param.rs 가중치 주석")))
+    # 8) 홈 피드에서 생긴 반응만
+    if re.search(r"served in Home Timeline", hm_txt) and re.search(r"Directly\s+(?://\s*)?navigating", hm_txt):
+        cards.append(card("🏠 홈 타임라인에서 생긴 반응만 반영돼요", [
+            L("코드 주석: 추천 시스템에 반영되려면 그 반응이 홈 타임라인에 보여준 글에서 일어나야 해요", "링크로 글에 바로 들어가서 한 반응(단톡방 품앗이 등)은 노출 순위에 영향이 없어요")],
+            [], "", False, src=S(WSRC, "가중치 주석")))
+    # 9) 유도 라벨
+    k_send, k_ex = "home-mixer:VMRankerSendEngagementIneligible", "vm-ranker:ExcludeIneligibleEngagementHeads"
+    if k_send in sw or k_ex in sw:
+        on_s, on_e = sw.get(k_send, False), sw.get(k_ex, False)
+        st = lambda v: "<b>켜짐</b>" if v else "<b>꺼짐</b>"
+        how = [L("답글·공유·클릭 유도 안전 라벨(PROMOTES_REPLIES·SHARES·CLICKS)이 붙은 글은, 이 장치가 켜지면 해당 반응의 예측 점수를 계산에서 <b>빼요</b> (공유는 일반·DM·링크 복사 모두)",
+                 "감점이 아니라 그 플러스 몫이 빠지는 거라, 유도 라벨이 붙은 글은 노출 순위가 그만큼 덜 올라가요")]
+        how.append(f"동작하려면 라벨 전달(home-mixer, 지금 {st(on_s)})과 점수 제외(vm-ranker, 지금 {st(on_e)})가 <b>둘 다 켜져야</b> 해요. "
+                   + ("지금 공개 코드 기본값으로는 동작해요" if on_s and on_e else "지금 공개 코드 기본값으로는 동작하지 않아요"))
+        if re.search(r"feature-switch", hm_txt):
+            how.append("이 값들은 기능 스위치(feature switch) 기본값이에요. X가 코드를 바꾸지 않고 서버 설정만으로 켤 수 있어서, 실제 서비스에서 켜져 있는지는 공개 코드로 알 수 없어요")
+        b = [f'<span class="bc tip{" on" if sw[k] else ""}"{tip(((sw_ko(short(k)) or ("", ""))[1] or short(k)) + " (" + short(k) + ")")}>{esc((sw_ko(short(k)) or (short(k),))[0])} <b>{"ON" if sw[k] else "OFF"}</b></span>' for k in (k_send, k_ex) if k in sw]
+        cards.append(card("🙅 유도 라벨이 붙으면 답글·공유·클릭 점수가 빠져요", how, b, "", False,
+                          src=S("vm-ranker/params.rs (ExcludeIneligibleEngagementHeads)", "vm-ranker/scoring/value_model.rs (exclude_ineligible_heads)",
+                                "home-mixer/params/param.rs (VMRankerSendEngagementIneligible)", "home-mixer/scorers/vm_ranker_engagement_labels.rs")))
+    # 10) 작성자 다양성 + DPP
     ad = sw.get("vm-ranker:EnableAuthorDiversity")
-    if ad is not None:
-        dec, flo = to_num(str(oth.get("vm-ranker:AuthorDiversityDecay", ""))), to_num(str(oth.get("vm-ranker:AuthorDiversityFloor", "")))
-        how = ["한 번에 여러 개를 몰아 올리기보다 <b>시간 간격을 두고</b> 올려보세요"]
-        if ad and dec is not None and flo is not None:
-            m2, m3 = (1 - flo) * dec + flo, (1 - flo) * dec ** 2 + flo
-            how.append(f"작성자 다양성 장치가 <b>켜져 있어요</b>(vm-ranker 기본값). 한 사람 글이 같은 피드 후보에 여러 개 오르면 두 번째 글은 점수 ×{fmt(round(m2, 3))}, 세 번째는 ×{fmt(round(m3, 3))}로 줄어요")
-        elif ad:
-            how.append("작성자 다양성 장치가 <b>켜져 있어요</b>(vm-ranker 기본값). 같은 사람 글이 몰리면 뒤 글의 점수가 줄어요")
-        else:
-            how.append("작성자 다양성 장치는 지금 코드에선 <b>꺼져 있어요</b>. 그래도 같은 글이 쏟아지면 뮤트·관심 없음으로 이어질 수 있어요")
-        b = [f'<span class="bc tip{" on" if ad else ""}"{tip("같은 작성자 글이 한 피드에 몰리지 않게 뒤 글의 점수를 낮추는 장치예요. home-mixer 자체 점수 계산 쪽에는 꺼진 채로 고정돼 있어요 (EnableAuthorDiversity)")}>작성자 다양성 <b>{"ON" if ad else "OFF"}</b></span>']
-        if "vm-ranker:DppEnabled" in sw:
-            how.append("비슷한 글이 몰리지 않게 섞는 장치(DPP)도 " + onoff("vm-ranker:DppEnabled") + ". 같은 얘기만 반복하기보다 주제와 각도를 바꿔보세요")
-            b.append(f'<span class="bc tip{" on" if sw["vm-ranker:DppEnabled"] else ""}"{tip("비슷한 글이 한 피드에 몰리지 않게 골라내는 장치예요 (DppEnabled)")}>유사 글 분산 <b>{"ON" if sw["vm-ranker:DppEnabled"] else "OFF"}</b></span>')
-        cards.append(card("🗓️ 몰아 올리지 말고 간격을 두세요", how, b, "", False))
-    # 10) 영상
+    dpp = sw.get("vm-ranker:DppEnabled")
+    if ad is not None or dpp is not None:
+        how, b, rs = [], [], []
+        if ad is not None:
+            dec, flo = to_num(str(oth.get("vm-ranker:AuthorDiversityDecay", ""))), to_num(str(oth.get("vm-ranker:AuthorDiversityFloor", "")))
+            if ad and dec is not None and flo is not None:
+                m2, m3 = (1 - flo) * dec + flo, (1 - flo) * dec ** 2 + flo
+                how.append(L(f"한 번의 순위 계산에서 같은 작성자 글이 여러 개면, 점수가 높은 순으로 두 번째 글 점수 ×{fmt(round(m2, 3))}, 세 번째 ×{fmt(round(m3, 3))} (최소 ×{fmt(flo)})",
+                             "같은 사람 글이 한 피드 후보에 함께 오르면 두 번째 글부터 노출 순위가 낮아져요"))
+            elif ad:
+                how.append(L("같은 작성자 글이 여러 개면 뒤 글의 점수를 줄여요", "두 번째 글부터 노출 순위가 낮아져요"))
+            else:
+                how.append("작성자 다양성 장치는 지금 공개 코드 기본값으로 <b>꺼져 있어요</b>. 같은 사람 글이 함께 올라도 이 장치로 낮아지진 않아요")
+            how.append("home-mixer 자체 점수 계산 쪽에서는 이 장치가 꺼진 채로 고정돼 있어요")
+            b.append(f'<span class="bc tip{" on" if ad else ""}"{tip("같은 작성자 글이 한 피드 후보에 몰리면 뒤 글의 점수를 낮추는 장치 (EnableAuthorDiversity)")}>작성자 다양성 <b>{"ON" if ad else "OFF"}</b></span>')
+            rs += ["vm-ranker/params.rs (EnableAuthorDiversity, AuthorDiversityDecay, AuthorDiversityFloor)", "xai-value-model/scoring.rs (diversity_multiplier)", "home-mixer/scorers/value_model.rs"]
+        if dpp is not None:
+            how.append(L("DPP가 " + ("<b>켜져 있어요</b>. 글 내용 임베딩이 비슷한 후보끼리는 함께 뽑히기 어렵게 골라요" if dpp else "<b>꺼져 있어요</b>"),
+                         "한 피드 후보에 비슷한 글이 여럿이면 일부는 노출 순위가 낮아질 수 있어요" if dpp else "지금 기본값으로는 비슷한 글끼리 섞는 단계가 없어요"))
+            b.append(f'<span class="bc tip{" on" if dpp else ""}"{tip("비슷한 글이 한 피드에 몰리지 않게 골라내는 장치예요 (DppEnabled)")}>유사 글 분산 <b>{"ON" if dpp else "OFF"}</b></span>')
+            rs += ["vm-ranker/params.rs (DppEnabled)", "vm-ranker/dpp.rs"]
+        cards.append(card("🗓️ 같은 사람·비슷한 글이 몰리면 뒤 글은 낮아져요", how, b, "", False, src=S(*rs)))
+    # 11) 영상
     vw = [n for n in VIDEO_W if n in W]
     if vw:
+        vmv = {n: v for n, v in ((short(k), v) for k, v in snap["weights"].items() if k.startswith("vm-ranker:")) if n in VIDEO_W and v}
         if all(W[n] == 0 for n in vw):
-            how = ["홈 피드에서 영상 관련 가중치가 <b>전부 0</b>이에요. 영상이라는 이유만으로 가산점이 붙진 않아요",
-                   "영상도 결국 공유·답글·머무름 같은 신호로 평가돼요. 편한 형식으로 내용에 집중하세요"]
-            title = "🎬 영상이라고 자동 가산점은 없어요"
+            how = [L("홈 피드 영상 관련 가중치(" + ", ".join(ko_label(n) for n in vw) + ")가 <b>모두 0</b>이에요", "영상 시청이 예측돼도 그 자체로는 노출 순위가 높아지지 않아요. 영상 글도 공유·답글·머무름 같은 다른 예측으로 순위가 정해져요")]
+            title = "🎬 영상 시청 예측은 지금 반영되지 않아요"
         else:
             nz = [n for n in vw if W[n] != 0]
-            how = ["홈 피드 영상 가중치에 0이 아닌 값이 있어요 (" + ", ".join(f"{ko_label(n)} {fmt(W[n])}" for n in nz) + "). 영상 시청도 점수에 들어가요",
-                   "영상은 앞부분에서 바로 핵심을 보여주세요"]
-            title = "🎬 영상 시청도 점수에 들어가요"
-        cards.append(card(title, how, [chip(n) for n in vw], recent(vw), False))
+            how = [L(", ".join(f"{ko_label(n)} 예측 × <b>{fmt(W[n])}</b>" for n in nz), "영상 시청이 예측되는 글은 노출 순위가 높아져요")]
+            title = "🎬 영상 시청 예측도 반영돼요"
+        if vmv:
+            how.append("참고: vm-ranker 코드 기본값은 " + ", ".join(f"{ko_label(n)} {fmt(v)}" for n, v in vmv.items()) + "로 home-mixer와 달라요. 이 카드는 설정 기본값을 옮겨 적은 home-mixer 값 기준이에요")
+        cards.append(card(title, how, [chip(n) for n in vw], recent(vw), False, src=S(WSRC, *vw)))
 
     # ---- 최근 바뀐 점
     tl = [x for x in reversed(ctx["timeline"]) if kst(x[0]["date"]) >= cutoff]  # 오래된 것부터
@@ -1058,17 +1107,17 @@ def render_tips(ctx):
         lab = ko_label(n)
         steps = " → ".join(f"{fmt(v)}({d.month}/{d.day})" for d, v in e["steps"])
         if o == nv:
-            what, mean = f"{fmt(o)} → {steps}", "잠깐 바뀌었다가 원래 값으로 돌아왔어요. 결과적으로 예전과 같아요"
+            what, mean = f"{fmt(o)} → {steps}", "잠깐 바뀌었다가 원래 값으로 돌아왔어요. 지금 노출 순위 계산은 예전과 같아요"
         else:
             what = f"{fmt(o)} → {steps}"
             if n in NEG or (nv < 0 and o <= 0):
-                mean = "이런 반응을 부르는 글은 더 크게 깎일 수 있어요" if nv < o else "감점이 조금 약해졌지만 여전히 큰 감점이에요"
+                mean = f"'{lab}' 반응이 예측되는 글은 노출 순위가 더 낮아져요" if nv < o else f"'{lab}' 반응이 예측되는 글이 낮아지는 폭이 조금 줄었어요"
             elif nv == 0:
-                mean = "지금은 이 행동이 순위에 반영되지 않아요"
+                mean = f"'{lab}' 예측은 지금 노출 순위에 반영되지 않아요"
             elif nv > o:
-                mean = f"'{lab}' 비중이 커졌어요. 이 반응이 나오는 글이 더 유리해졌을 수 있어요"
+                mean = f"'{lab}' 반응이 예측되는 글은 노출 순위가 조금 더 높아져요"
             else:
-                mean = f"'{lab}' 비중이 조금 줄었어요"
+                mean = f"'{lab}' 예측으로 노출 순위가 높아지는 폭이 조금 줄었어요"
             if abs(nv - o) <= abs(o) * 0.1 and o != 0 and nv != 0:
                 mean += " (변화 폭은 작아요)"
         rows.append(("w", e["steps"][-1][0], f'<span class="c w">가중치</span> <span class="kn">{esc(lab)}</span> <b>{esc(what)}</b>', mean))
@@ -1092,16 +1141,16 @@ def render_tips(ctx):
         if n in CREATOR_SW:
             mean = CREATOR_SW[n][0 if cur else 1]
         elif cur:
-            mean = "이 기능이 지금 돌고 있어요. 크리에이터에게 주는 영향은 코드만으로는 분명하지 않아요"
+            mean = "켜졌어요. 노출 순위에 어떤 영향을 주는지는 코드에서 확인되지 않았어요"
         else:
-            mean = "아직 꺼져 있어서 지금 당장 영향은 없어요"
+            mean = "꺼진 채로 들어와서 지금 기본값으로는 동작하지 않아요"
         sw_rows.append(("s", d, f'<span class="c {cls}">{esc(tag)}</span> {kn("switch", n)}', mean))
     rows += sw_rows[:6]
     sw_more += max(0, len(sw_rows) - 6)
     # 크리에이터에게 뜻이 분명한 것(큰 가중치 변화, 설명이 있는 스위치)을 먼저 보여주고 나머지는 접는다
     def prio(r):
         kind, d, head, mean = r
-        weak = "(변화 폭은 작아요)" in mean or "당장 영향은 없어요" in mean or "분명하지 않아요" in mean
+        weak = "(변화 폭은 작아요)" in mean or "동작하지 않아요" in mean or "확인되지 않았어요" in mean
         return (weak, -d.timestamp())
     rows.sort(key=prio)
     A(f'<section class="tab" id="t-tips"><h2 class="th2">크리에이터를 위한 팁</h2>'
@@ -1116,6 +1165,7 @@ def render_tips(ctx):
             A(f'<details class="rest"><summary>작은 변화 {len(rows) - 5}개 더 보기</summary><div class="rl">' + "".join(ri(r) for r in rows[5:]) + '</div></details>')
     else:
         A(f'<div class="mini">최근 {TIPS_DAYS}일 동안 가중치나 주요 스위치에 바뀐 점이 없어요</div>')
+    A(f'<div class="srcl">출처 <code>home-mixer/params/param.rs</code> · <code>vm-ranker/params.rs</code> 커밋별 비교</div>')
     if sw_more or others:
         A(f'<div class="mini" style="margin-top:6px">그 밖에 광고·영상 캐러셀·기록용 등 기술적인 변화 {sw_more + others}건은 <a href="#log" class="tolog">업데이트 기록</a> 탭에서 볼 수 있어요</div>')
     A('</div>')
@@ -1124,10 +1174,11 @@ def render_tips(ctx):
     for i, cd in enumerate(cards, 1):
         A(f'<div class="tc"><div class="tch"><span class="tno">{i}</span><h4>{cd["title"]}</h4>{cd["chg"]}</div><ul>'
           + "".join(f"<li>{h}</li>" for h in cd["how"]) + '</ul>'
-          f'<div class="bs"><span class="bl">근거</span>{"".join(cd["basis"])}</div></div>')
+          + (f'<div class="bs"><span class="bl">값</span>{"".join(cd["basis"])}</div>' if cd["basis"] else '')
+          + f'<div class="srcl"><span class="bl">출처</span>{cd["src"]}</div></div>')
     A('</div>')
     np_ = len(pos_cards)
-    A('<div class="note" style="margin-top:2px">' + (f'1~{np_}번은 지금 가중치가 큰 순서예요. ' if np_ > 1 else '') + '숫자는 그 행동이 나올 <b>예측 확률</b>에 곱하는 값이라, 실제 반응 횟수와 바로 비교할 수 없어요</div>')
+    A('<div class="note" style="margin-top:2px">' + (f'1~{np_}번은 지금 가중치가 큰 순서예요. ' if np_ > 1 else '') + '숫자는 그 행동이 나올 <b>예측 확률</b>에 곱하는 값이라 실제 반응 횟수와 바로 비교할 수 없어요. 코드 주석에 따르면 가중치는 행동의 가치와 그 행동이 평소 얼마나 자주 일어나는지를 함께 반영해요</div>')
     # ---- OCR 공식 규칙 (정적)
     A('<h3 class="sh">💰 OCR(오리지널 콘텐츠 리워드) 공식 규칙</h3><div class="note">수익 기준 · X 공식 도움말 내용 · 마지막 확인 <b>' + OCR_CHECKED + '</b></div><div class="card ocr"><ul>'
       '<li><b>직접 만든 콘텐츠만 원본으로 쳐줘요.</b> 그대로 퍼온 글·사진·영상, 단어 몇 개나 필터·자막만 바꾼 것, 남의 콘텐츠 모음글, 다른 플랫폼에서 가져온 글은 수익이 안 나요. '
@@ -1195,7 +1246,7 @@ def main():
         base = prev_run["base"]
     else:
         base = {"switches": prev_run["switches"], "weights": prev_run["weights"], "sha": prev_run.get("sha")} if prev_run else None
-    ctx = {"latest": latest, "snap": snap, "first_seen": first_seen, "first_is_base": first_is_base, "prev_run": base,
+    ctx = {"src": a.src, "latest": latest, "snap": snap, "first_seen": first_seen, "first_is_base": first_is_base, "prev_run": base,
            "now": now, "timeline": tl, "notable": readme_updates(a.src), "last_weight_change": last_weight_change}
     os.makedirs(SITE, exist_ok=True)
     open(os.path.join(SITE, "index.html"), "w", encoding="utf-8").write(render(ctx))
