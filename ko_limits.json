@@ -1,0 +1,532 @@
+{
+ "_note": "노출 제한 탭 번역. text=영문 원문 그대로를 키로, label=밑줄·대소문자 뺀 라벨 이름, score=자동 판정 라벨, bot=botmaker 파일명, filter=필터 struct, vf=visibility 규칙 id",
+ "text": {
+  "Post detected by automated systems as one that may contain content subject to X's Adult Content policy.": "자동 시스템이 X의 성인 콘텐츠 정책에 해당할 수도 있다고 본 글이에요.",
+  "Post hidden from recommendations to non-followers and from underage users, users without a stated age, and logged out users.": "팔로워가 아닌 사람의 추천에서 빠지고, 미성년자·나이 미입력 사용자·로그아웃 사용자에게도 안 보여요.",
+  "Post detected by automated systems or in response to a user report as likely to contain content subject to X's Adult Content policy.": "자동 시스템이나 사용자 신고로 X의 성인 콘텐츠 정책에 해당할 가능성이 높다고 본 글이에요.",
+  "Post shown behind content warning, hidden from recommendations to non-followers and hidden from underage users, users without a stated age, and logged out users. In India, this content is shown as restricted due to local law(s).": "경고 화면 뒤에 보이고, 비팔로워 추천에서 빠지며, 미성년자·나이 미입력·로그아웃 사용자에게 안 보여요. 인도에서는 현지 법 때문에 제한된 콘텐츠로 표시돼요.",
+  "Post detected by automated systems as likely to contain adult sexually explicit language.": "자동 시스템이 성적으로 노골적인 표현이 있을 가능성이 높다고 본 글이에요.",
+  "Post hidden from recommendations to non-followers, and hidden from underage users, users without a stated age, and logged out users.": "팔로워가 아닌 사람의 추천에서 빠지고, 미성년자·나이 미입력 사용자·로그아웃 사용자에게도 안 보여요.",
+  "Post detected by automated systems as likely to contain content subject to X's Adult Content policy.": "자동 시스템이 X의 성인 콘텐츠 정책에 해당할 가능성이 높다고 본 글이에요.",
+  "Post shown behind content warning and hidden from recommendations to non-followers and hidden from underage users, users without a stated age and logged out users.": "경고 화면 뒤에 보이고, 비팔로워 추천에서 빠지며, 미성년자·나이 미입력·로그아웃 사용자에게 안 보여요.",
+  "Post detected by automated systems or in response to a user report as likely to contain content subject to X's Violent Content policy.": "자동 시스템이나 사용자 신고로 X의 폭력적 콘텐츠 정책에 해당할 가능성이 높다고 본 글이에요.",
+  "Post shown behind content warning, hidden from recommendations to non-followers and hidden from underage users, users without a stated age, and logged out users.": "경고 화면 뒤에 보이고, 비팔로워 추천에서 빠지며, 미성년자·나이 미입력·로그아웃 사용자에게 안 보여요.",
+  "Post detected by automated systems as one that may contain spam.": "자동 시스템이 스팸일 수도 있다고 본 글이에요.",
+  "Post hidden from recommendations to non-followers.": "팔로워가 아닌 사람의 추천에서 빠져요.",
+  "Post identified by automated systems or in response to a user report as likely to contain content in violation of X's Authenticity policy.": "자동 시스템이나 사용자 신고로 X의 진정성(Authenticity) 정책 위반 가능성이 높다고 본 글이에요.",
+  "Post is not shown on X.": "X 어디에도 보이지 않아요.",
+  "Post detected by automated systems as likely to contain a link to a malicious site.": "자동 시스템이 악성 사이트 링크가 들어 있을 가능성이 높다고 본 글이에요.",
+  "Post detected by automated systems as one that may contain AI generated media related to electoral processes in violation of Brazil local law during silence period, specifically Tribunal Superior Eleitoral Resolution n. 23.610, Art9-B, § 3-A": "브라질 선거 침묵 기간에 현지 법(고등선거법원 결의 23.610호 9-B조 §3-A)을 어기는 선거 관련 AI 생성 미디어가 있을 수 있다고 자동 시스템이 본 글이에요.",
+  "In Brazil, post hidden from recommendations.": "브라질에서는 추천에서 빠져요.",
+  "Historically applied to posts detected by automated systems as likely to contain a link to a malicious site. Being replaced by MALICIOUS_URL label and then will be fully removed.": "예전에 악성 사이트 링크가 의심되는 글에 붙이던 라벨이에요. MALICIOUS_URL 라벨로 바뀌는 중이고 나중에 완전히 없어질 예정이에요.",
+  "Included in this report since any posts that have this label would be hidden from recommendations to non-followers.": "이 라벨이 있는 글은 비팔로워 추천에서 빠지기 때문에 목록에 들어가 있어요.",
+  "Post detected by automated systems as likely to contain content in violation of X's Terms of Service policy.": "자동 시스템이 X 서비스 약관 위반 가능성이 높다고 본 글이에요.",
+  "Post is not shown on X while pending further review.": "추가 검토가 끝날 때까지 X 어디에도 보이지 않아요.",
+  "Post detected by automated systems or in response to a user report to contain content in violation of X's Terms of Service policy.": "자동 시스템이나 사용자 신고로 X 서비스 약관 위반이 확인된 글이에요.",
+  "Post is not shown on X while pending deletion by the author.": "작성자가 지울 때까지 X 어디에도 보이지 않아요.",
+  "Emergency incident-response label with a custom notice.": "긴급 사고 대응용 라벨이에요. 따로 정한 안내문이 붙어요.",
+  "Posts that have this label would be shown behind a notice and not shown in the Home timeline.": "안내문 뒤에 보이고, 홈 타임라인에는 나오지 않아요.",
+  "Post detected in response to a user report to contain content in violation of X's Abuse and Harassment policy.": "사용자 신고로 X의 괴롭힘·학대 정책 위반이 확인된 글이에요.",
+  "Post discoverability is restricted to the author's profile. All users can see a label explaining that the post has limited visibility.": "작성자 프로필에서만 찾을 수 있어요. 모든 사람에게 '노출이 제한된 글'이라는 표시가 보여요.",
+  "Post detected by automation systems or in response to a user report to contain content in violation of X's Hateful Conduct policy.": "자동 시스템이나 사용자 신고로 X의 혐오 행위 정책 위반이 확인된 글이에요.",
+  "Post detected in response to a user report to contain content in violation of X's Violent Content policy.": "사용자 신고로 X의 폭력적 콘텐츠 정책 위반이 확인된 글이에요.",
+  "Post detected in response to a user report to contain content in violation of X's Civic Integrity policy.": "사용자 신고로 X의 시민 무결성(선거 등) 정책 위반이 확인된 글이에요.",
+  "Post detected by automated systems or in response to a user report to contain content in violation of X's Abuse and Harassment policy.": "자동 시스템이나 사용자 신고로 X의 괴롭힘·학대 정책 위반이 확인된 글이에요.",
+  "Post hidden from recommendations to non-followers. All users can see a label explaining that the post has limited visibility.": "팔로워가 아닌 사람의 추천에서 빠져요. 모든 사람에게 '노출이 제한된 글'이라는 표시가 보여요.",
+  "Post written by an account with an NsfwAdmin user label, where the account was identified in response to a user report as primarily posting content subject to X's Adult Content or Violent Content policies.": "NsfwAdmin 계정 라벨이 있는 계정이 쓴 글이에요. 이 계정은 사용자 신고로 성인·폭력 콘텐츠를 주로 올린다고 확인됐어요.",
+  "Post shown behind content warning, hidden from recommendations to non-followers and from underage users, users without a stated age, and logged out users.": "경고 화면 뒤에 보이고, 비팔로워 추천에서 빠지며, 미성년자·나이 미입력·로그아웃 사용자에게 안 보여요.",
+  "Account locked to read-only due to violation of X's Terms of Service policy that requires post removal from the platform.": "글 삭제가 필요한 X 서비스 약관 위반으로 계정이 읽기 전용으로 잠겼어요.",
+  "The account can only read content on the platform until the post in violation is removed. The account's posts are hidden from recommendations to non-followers.": "위반한 글을 지울 때까지 읽기만 할 수 있어요. 이 계정의 글은 비팔로워 추천에서 빠져요.",
+  "Account identified by automated systems or in response to a user report as compromised.": "자동 시스템이나 사용자 신고로 해킹(도용)된 것으로 확인된 계정이에요.",
+  "The account's posts are hidden from recommendations to non-followers. Password reset required.": "이 계정의 글은 비팔로워 추천에서 빠져요. 비밀번호를 다시 설정해야 해요.",
+  "Account detected by automated systems as likely to post spam.": "자동 시스템이 스팸을 올릴 가능성이 높다고 본 계정이에요.",
+  "The account's posts are hidden from recommendations to non-followers.": "이 계정의 글은 팔로워가 아닌 사람의 추천에서 빠져요.",
+  "Account detected by automated systems as one that may post content subject to X's Adult Content policy.": "자동 시스템이 성인 콘텐츠 정책에 해당하는 글을 올릴 수도 있다고 본 계정이에요.",
+  "Account detected by automated systems as likely to post content subject to X's Adult Content policy.": "자동 시스템이 성인 콘텐츠 정책에 해당하는 글을 올릴 가능성이 높다고 본 계정이에요.",
+  "Account identified in response to a user report as primarily posting content subject to X's Adult Content or Violent Content policies.": "사용자 신고로 성인·폭력 콘텐츠를 주로 올린다고 확인된 계정이에요.",
+  "The account's posts are shown behind content warning, hidden from recommendations to non-followers and from underage users, users without a stated age, and logged out users.": "이 계정의 글은 경고 화면 뒤에 보이고, 비팔로워 추천에서 빠지며, 미성년자·나이 미입력·로그아웃 사용자에게 안 보여요.",
+  "Account detected by automated systems as likely in violation of X's Authenticity policy.": "자동 시스템이 X의 진정성(사칭 등) 정책 위반 가능성이 높다고 본 계정이에요.",
+  "Account detected by automated systems may be in violation of X's Authenticity policy.": "자동 시스템이 X의 진정성(사칭 등) 정책을 어겼을 수도 있다고 본 계정이에요.",
+  "The account's posts are hidden from recommendations to non-followers. Security challenge required to prevent automated abuse.": "이 계정의 글은 비팔로워 추천에서 빠져요. 자동화 악용을 막기 위한 보안 확인을 통과해야 해요.",
+  "Account detected by automated systems as likely to contain content in violation of X's Terms of Service policy.": "자동 시스템이 X 서비스 약관 위반 콘텐츠가 있을 가능성이 높다고 본 계정이에요.",
+  "The account's posts are hidden from recommendations to non-followers pending further review.": "추가 검토가 끝날 때까지 이 계정의 글은 비팔로워 추천에서 빠져요.",
+  "Post withheld where the content has been found to violate local law(s) following a third-party report.": "제3자 신고 뒤 현지 법 위반으로 확인된 지역에서 가려진 글이에요.",
+  "Post is not shown on X in {countries} where it violates local law(s).": "현지 법을 어기는 나라({countries})에서는 X에 보이지 않아요.",
+  "Post has been withheld in response to a legal demand.": "법적 요청에 따라 가려진 글이에요.",
+  "Historically applied to posts withheld in response to a legal demand or if found to violate local law(s) following a third-party report.": "예전에 법적 요청이나 제3자 신고 뒤 현지 법 위반으로 가려진 글에 붙이던 표시예요.",
+  "Applied in response to a report from a copyright holder or authorized representative to content found to violate X's Copyright policy. Applied along with the DMCA label.": "저작권자(또는 대리인) 신고로 X 저작권 정책 위반이 확인된 콘텐츠에 붙어요. DMCA 라벨과 함께 붙어요.",
+  "Applied in response to a report from a copyright holder or authorized representative to content found to violate X's Copyright policy.": "저작권자(또는 대리인) 신고로 X 저작권 정책 위반이 확인된 콘텐츠에 붙어요.",
+  "Post hidden from recommendations to non-followers. Where the post is seen, media in the post is unavailable.": "팔로워가 아닌 사람의 추천에서 빠지고, 글이 보이는 곳에서도 미디어는 볼 수 없어요.",
+  "Posts from this account withheld where the account has been found to violate local law(s) following a third-party report.": "제3자 신고 뒤 현지 법 위반으로 확인된 지역에서 이 계정의 글이 가려져요.",
+  "This account's posts are not shown on X in {countries} where it violates local law(s).": "현지 법을 어기는 나라({countries})에서는 이 계정의 글이 X에 보이지 않아요.",
+  "Posts from this account withheld in response to a legal demand.": "법적 요청에 따라 이 계정의 글이 가려져요.",
+  "Historically applied to accounts withheld in response to a legal demand or if found to violate local law(s) following a third-party report.": "예전에 법적 요청이나 제3자 신고로 가려진 계정에 붙이던 표시예요.",
+  "This account's posts are not shown on X.": "이 계정의 글은 X 어디에도 보이지 않아요.",
+  "the account's follower count is at or above the follower ceiling, or the head's raised limit": "계정 팔로워 수가 상한선(또는 따로 올린 한도) 이상이면 자동 조치를 건너뛰어요",
+  "gizmoduck marks the account as a temporary or permanent test account": "X 내부 테스트 계정이면 건너뛰어요",
+  "the account matches the service's test-account policy": "서비스의 테스트 계정 기준에 맞으면 건너뛰어요",
+  "the reply's parent post mentions the reply's author in its own text": "답글을 단 글(부모 글) 본문에 답글 작성자가 @멘션돼 있으면 건너뛰어요 (초대받은 답글)",
+  "the reply's parent post couldn't be read": "부모 글을 읽지 못하면 안전하게 건너뛰어요"
+ },
+ "label": {
+  "SPAMHIGHRECALL": [
+   "스팸 의심 (넓게 잡음)",
+   "놓치지 않으려고 넓게 잡는 스팸 라벨"
+  ],
+  "SPAM": [
+   "스팸 (확정)",
+   ""
+  ],
+  "NSFWHIGHRECALL": [
+   "성인물 의심 (넓게)",
+   ""
+  ],
+  "NSFWHIGHPRECISION": [
+   "성인물 (정확도 높음)",
+   ""
+  ],
+  "NSFWNEARPERFECT": [
+   "성인물 (거의 확실)",
+   ""
+  ],
+  "NSFWTEXT": [
+   "성적 표현 글",
+   ""
+  ],
+  "NSFWCARDIMAGE": [
+   "링크 카드 성인 이미지",
+   ""
+  ],
+  "NSFWAVATARIMAGE": [
+   "프로필 사진 성인물",
+   ""
+  ],
+  "NSFWBANNERIMAGE": [
+   "배너 이미지 성인물",
+   ""
+  ],
+  "NSFWADMIN": [
+   "성인·폭력 계정 (신고 확인)",
+   ""
+  ],
+  "GOREANDVIOLENCEHIGHPRECISION": [
+   "잔혹·폭력 미디어",
+   ""
+  ],
+  "MALICIOUSURL": [
+   "악성 링크",
+   ""
+  ],
+  "UNSAFEURL": [
+   "위험 링크",
+   ""
+  ],
+  "SEARCHBLACKLIST": [
+   "검색 제외",
+   ""
+  ],
+  "BRAZILELECTIONLEGAL": [
+   "브라질 선거법",
+   ""
+  ],
+  "DONOTAMPLIFY": [
+   "증폭 금지",
+   ""
+  ],
+  "PDNA": [
+   "약관 위반 검토 중",
+   ""
+  ],
+  "BOUNCE": [
+   "삭제 요구 (바운스)",
+   ""
+  ],
+  "FOREMERGENCYUSEONLY": [
+   "긴급 대응",
+   ""
+  ],
+  "FOSNRABUSE": [
+   "괴롭힘 · 노출 제한",
+   ""
+  ],
+  "FOSNRHATEFULCONDUCT": [
+   "혐오 행위 · 노출 제한",
+   ""
+  ],
+  "FOSNRVIOLENTSPEECH": [
+   "폭력적 발언 · 노출 제한",
+   ""
+  ],
+  "FOSNRCIVICINTEGRITY": [
+   "선거·시민 무결성 · 노출 제한",
+   ""
+  ],
+  "FOSNRABUSEINSULTS": [
+   "모욕 · 노출 제한",
+   ""
+  ],
+  "READONLY": [
+   "읽기 전용 계정",
+   ""
+  ],
+  "COMPROMISED": [
+   "해킹된 계정",
+   ""
+  ],
+  "IMPERSONATIONHIGHPRECISION": [
+   "사칭 계정",
+   ""
+  ],
+  "ABUSIVEHIGHRECALL": [
+   "약관 위반 의심 계정",
+   ""
+  ],
+  "RISKYHIGHVIZREPLY": [
+   "위험한 고노출 답글",
+   "Under the Hood 목록에 없는 라벨"
+  ],
+  "COPYPASTASPAM": [
+   "복붙 스팸",
+   ""
+  ],
+  "AGATHASPAM": [
+   "Agatha 스팸 점수 높은 글",
+   ""
+  ],
+  "AGATHASPAMTOPUSER": [
+   "Agatha 스팸 상위 계정",
+   ""
+  ],
+  "LOWQUALITY": [
+   "저품질",
+   ""
+  ],
+  "DUPLICATECONTENT": [
+   "중복 콘텐츠",
+   ""
+  ],
+  "SOFTNSFW": [
+   "약한 성인물",
+   ""
+  ],
+  "BYSTANDERREPORT": [
+   "현지 법 위반 (제3자 신고)",
+   ""
+  ],
+  "LEGALREQUEST": [
+   "법적 요청",
+   ""
+  ],
+  "UNSPECIFIEDREASON": [
+   "사유 미지정 (옛 방식)",
+   ""
+  ],
+  "DMCA": [
+   "저작권(DMCA)",
+   ""
+  ],
+  "ISDMCA": [
+   "저작권 미디어(is_dmca)",
+   ""
+  ]
+ },
+ "score": {
+  "llm_slop_post": "AI가 대충 만든 듯한 저품질 글(LLM slop)로 판정",
+  "gibberish_post": "의미 없는 글(gibberish)로 판정",
+  "fast_reply_spam_post": "빠른 답글 스팸으로 판정 (몇 초가 '빠른'지는 공개 코드에 없어요)",
+  "anchor_campaign_post": "조직적 캠페인(anchor campaign) 글로 판정",
+  "anchor_campaign_user": "조직적 캠페인 계정으로 판정",
+  "anchor_campaign_suspend": "조직적 캠페인, 정지 대상으로 판정",
+  "anchor_campaign_suspend_cse": "조직적 캠페인 중 아동 성착취(CSE) 관련으로 판정",
+  "SpamEmbeddingPtosDistilled": "스팸 임베딩 모델(약관 위반 학습)이 스팸으로 판정",
+  "cse_reports_embedding_v2": "아동 성착취(CSE) 신고 임베딩 모델이 판정",
+  "panda_reports_embedding_v10_rough_spam": "신고 기반 임베딩 모델이 거친 스팸으로 판정",
+  "bb1_post_spam_bot_suspend": "글 스팸 봇, 정지 대상으로 판정",
+  "bb1_post_spam_bot_bounce": "글 스팸 봇, 확인 대상으로 판정",
+  "bb1_reply_spam_bot_suspend": "답글 스팸 봇, 정지 대상으로 판정",
+  "bb1_reply_spam_bot_bounce": "답글 스팸 봇, 확인 대상으로 판정",
+  "bb1_user_suspend": "스팸 봇 계정, 정지 대상으로 판정",
+  "bb1_user_bounce": "스팸 봇 계정, 확인 대상으로 판정",
+  "liveness_check_and_spam_high_recall_7d": "사람 확인 + 7일 스팸 의심 대상으로 판정",
+  "spam_high_recall_7d": "7일 스팸 의심 대상으로 판정",
+  "llm_slop_user": "AI 저품질 글을 올리는 계정으로 판정",
+  "SpamEmbeddingMajorityPoster": "올린 글 대부분이 스팸 임베딩과 비슷한 계정으로 판정",
+  "spam_liveness_check_required": "사람인지 확인이 필요한 계정으로 판정",
+  "enforcement_cusp_arkose": "조치 기준 바로 아래(경계선) — Arkose 확인 대상",
+  "enforcement_cusp_captcha": "조치 기준 바로 아래(경계선) — 캡차 대상",
+  "enforcement_cusp_liveness": "조치 기준 바로 아래(경계선) — 사람 확인 대상",
+  "impersonation_scam_classifier_v1_suspend": "사칭 사기 분류 모델이 정지 대상으로 판정"
+ },
+ "bot": {
+  "AgathaSpamProduction__ApplySearchTopTweetLabel": [
+   "스팸 점수 높은 계정의 새 글",
+   "계정의 스팸 점수(Agatha)가 기준을 넘으면, 그 계정이 새로 쓴 글마다 AGATHA_SPAM 라벨을 붙여요"
+  ],
+  "BBQDuplicateTextProd": [
+   "같은 문장 복붙 글",
+   "정기 집계(BigQuery)에서 같은 텍스트가 여러 글에 반복된 묶음이 나오면 COPYPASTA_SPAM을 붙여요. 홍보용 영상·이미지 카드 글은 빼요"
+  ],
+  "BBQDuplicateTextRepliesProd": [
+   "같은 문장 복붙 답글",
+   "정기 집계에서 같은 단어 구성(또는 한중일 글자 구성)의 답글 묶음이 나오면 COPYPASTA_SPAM을 붙여요. 홍보용 카드 글은 빼요"
+  ],
+  "FollowFromActorWithPinnedLowQualityOrBadUrl": [
+   "고정 글에 나쁜 링크가 있는 계정의 팔로우",
+   "누군가를 팔로우한 계정의 고정 글 링크가 BAD 또는 LOW_QUALITY 판정이면 계정에 라벨을 붙여요 (메모: 알림 제한)"
+  ],
+  "PinnedLowQualityOrBadUrl": [
+   "나쁜 링크를 고정 글로 설정",
+   "고정 글을 바꿨는데 그 글 링크가 BAD 또는 LOW_QUALITY 판정이면 계정에 라벨을 붙여요"
+  ],
+  "GroxTweetProcessor": [
+   "Grox 스팸 점수 높은 답글",
+   "Grox 스팸 점수가 기준 이상인 글에 라벨을 붙여요. 대화를 시작한 원글 작성자 본인의 답글은 빼요"
+  ],
+  "LQ_Tweets_With_LQ_URL_Verdict_At_Mention_To_NonFollower": [
+   "저품질 링크 + 나를 팔로우하지 않는 사람 멘션",
+   "답글·리포스트가 아닌 글에 LOW_QUALITY 판정 링크가 있고, 멘션한 사람 중 작성자를 팔로우하지 않는 사람이 있으면 글에 라벨을 붙여요"
+  ],
+  "LQ_Tweets_With_LQ_URL_Verdict_At_Mention_To_NonFollower_v2": [
+   "저품질 링크가 든 글 (v2)",
+   "링크 이동 경로 중 하나라도 LOW_QUALITY이고 최종 주소가 GOOD·WHITELIST가 아니면 글에 라벨을 붙여요. 이름엔 '비팔로워 멘션'이 있지만 이 버전 조건엔 멘션 확인이 없어요"
+  ],
+  "NSFW_Card_Image_Media_To_URL_Verdict": [
+   "링크 카드 이미지 → 링크 판정",
+   "링크 카드 이미지가 성인물로 판정되면 그 링크 주소에 성인물 판정을 기록해요 (글 라벨은 직접 안 붙여요)"
+  ],
+  "NSFW_Card_Image_URL_to_Tweet_Verdict": [
+   "링크 판정 → 글 라벨",
+   "링크 주소의 성인물 판정이 바뀌면 그 링크를 쓴 글에 NSFW_CARD_IMAGE 라벨을 붙이거나 떼요"
+  ],
+  "NSFW_Grok_Generated_Image_To_URL_Verdict": [
+   "Grok 생성 이미지 → 링크 판정",
+   "Grok으로 만든 이미지가 성인물로 판정되면 관련 링크에 판정을 기록해요 (글 라벨은 직접 안 붙여요)"
+  ],
+  "NSFW_Grok_Share": [
+   "Grok 공유 링크 판정",
+   "Grok 공유 링크의 이미지 판정을 링크 주소에 기록해요 (글 라벨은 직접 안 붙여요)"
+  ],
+  "NsfwTweetMediaProcessor": [
+   "성인물 미디어 → 계정 라벨",
+   "글 미디어가 성인물로 판정되면 결과에 따라 계정에 성인물 라벨을 붙여요"
+  ],
+  "nsfw_user_write_user_label": [
+   "성인물 계정 판정 → 계정 라벨",
+   "계정이 성인물 계정으로 판정되면 계정 라벨을 붙이거나 검토 신고를 만들어요"
+  ],
+  "ProductionAgatha__FilterOutOrganicNotifications": [
+   "스팸 점수 높은 계정이 보내는 알림",
+   "다른 사람에게 알림이 가는 행동을 했을 때 계정 스팸 점수가 기준을 넘으면 계정에 AGATHA_SPAM_TOP_USER 라벨을 붙여요"
+  ],
+  "Tweet_Search_Blacklist_RTF_All_UNSAFE_URL_Sources": [
+   "위험(UNSAFE) 판정 링크가 든 글",
+   "글 링크의 판정이 UNSAFE면 검색 제외·위험 링크·증폭 금지·악성 링크 라벨을 붙여요"
+  ],
+  "Tweet_Spam_High_Recall_RTF_All_Bad_URL_Sources": [
+   "나쁜(BAD) 판정 링크가 든 글",
+   "글 링크의 판정이 BAD면 스팸 라벨을 붙여요"
+  ],
+  "ViolenceAndGore_ImageModel_MTT": [
+   "잔혹·폭력 이미지 모델",
+   "글 이미지·영상, 프로필·배너 이미지가 모델 기준을 넘으면 라벨을 붙여요"
+  ],
+  "rtf_tweets_on_unsafe_verdict": [
+   "링크 판정이 UNSAFE로 바뀔 때",
+   "링크 판정이 UNSAFE로 바뀌면 그 링크 글에 라벨을 붙이고, 판정이 풀리면 떼요"
+  ],
+  "tweet_rtf_or_unrtf_on_bad_verdict": [
+   "링크 판정이 BAD로 바뀔 때",
+   "링크 판정이 BAD로 바뀌면 SPAM 라벨을 붙이고, GOOD·WHITELIST로 바뀌면 떼요"
+  ]
+ },
+ "filter": {
+  "DropDuplicatesFilter": [
+   "중복 후보 제거",
+   "같은 글이 후보에 두 번 들어오면 하나만 남겨요"
+  ],
+  "ZeroFavCodivertFilter": [
+   "좋아요 0 후보 실험",
+   "좋아요가 0인 글 전용 검색 경로로만 들어온 후보를 빼는 실험이에요. 보는 사람이 실험군일 때만 켜져요"
+  ],
+  "CoreDataHydrationFilter": [
+   "본문 정보 없는 후보 제거",
+   "글 기본 정보(작성자·본문 등)를 못 불러온 후보를 빼요"
+  ],
+  "NewUserSoftNsfwFilter": [
+   "새 가입자에게 약한 성인물 숨김",
+   "가입한 지 얼마 안 된 사람의 추천 피드에서, 팔로우하지 않은 계정의 약한 성인물(soft NSFW) 글을 빼요"
+  ],
+  "AgeFilter": [
+   "오래된 글 제외",
+   "추천 후보에서 작성된 지 정해진 시간이 지난 글을 빼요"
+  ],
+  "SelfTweetFilter": [
+   "내 글 제외",
+   "보는 사람 자신의 글은 피드 후보에서 빼요"
+  ],
+  "OONRetweetReplyFilter": [
+   "비팔로워의 리포스트·답글 제외",
+   "팔로우하지 않은 계정의 리포스트와 답글은 추천에서 빼요. 부모 글 정보가 없는 답글도 빼요"
+  ],
+  "OONNsfwSimclustersFilter": [
+   "관심사 추천 경로의 성인물 계정 제외",
+   "관심사(SimClusters) 경로로 들어온 비팔로워 후보 중 작성자가 성인물 계정이면 빼요"
+  ],
+  "RetweetDeduplicationFilter": [
+   "같은 글의 리포스트 중복 제거",
+   "원글과 그 리포스트가 같이 들어오면 하나만 남겨요"
+  ],
+  "IneligibleSubscriptionFilter": [
+   "구독 전용 글",
+   "구독자 전용 글은 그 작성자를 구독한 사람에게만 남겨요"
+  ],
+  "PreviouslySeenPostsFilter": [
+   "이미 본 글 제외",
+   "보는 사람이 이미 본 글은 다시 넣지 않아요"
+  ],
+  "PreviouslySeenPostsBackupFilter": [
+   "이미 본 글 제외 (보조)",
+   "앱이 보낸 노출 기록으로 한 번 더 걸러요"
+  ],
+  "PreviouslyServedPostsFilter": [
+   "이미 보낸 글 제외",
+   "이번 세션에 이미 보낸 글(과 관련 글)은 다시 보내지 않아요"
+  ],
+  "ViewerMutedKeywordFilter": [
+   "뮤트 단어",
+   "보는 사람이 뮤트한 단어가 들어간 글을 빼요"
+  ],
+  "AuthorSocialgraphFilter": [
+   "차단·뮤트 관계",
+   "보는 사람이 차단·뮤트한 작성자, 작성자가 보는 사람을 차단한 경우, 인용·리포스트 대상이 차단 관계인 경우 빼요"
+  ],
+  "VideoFilter": [
+   "영상 제외 요청",
+   "앱이 영상 없는 피드를 요청했을 때만 영상 글을 빼요"
+  ],
+  "TopicIdsFilter": [
+   "주제 피드 / 제외 주제",
+   "주제 피드에서는 그 주제 글만 남기고, 보는 사람이 제외한 주제의 글은 빼요"
+  ],
+  "NewUserMinEngagementFilter": [
+   "새 가입자 피드의 최소 반응 기준",
+   "가입 직후(또는 복귀 직후) 사람의 추천 피드에서, 비팔로워 글 중 반응 비율이 기준보다 낮은 글을 빼요"
+  ],
+  "InventoryHoldoutFilter": [
+   "노출 보류 실험 (글 종류별)",
+   "원글·답글·리포스트별로 정해진 비율만큼 무작위로 빼는 실험이에요"
+  ],
+  "FavHoldoutFilter": [
+   "노출 보류 실험 (좋아요 수별)",
+   "좋아요 수가 많을수록 더 높은 비율(최대 15%)로 무작위로 빼는 실험이에요"
+  ],
+  "FairShareRankingFilter": [
+   "후보 경로별 공정 배분",
+   "점수 매길 후보가 너무 많으면 들어온 경로(검색 방식)별로 비율을 맞춰 자르는 장치예요"
+  ],
+  "VFFilter": [
+   "안전 규칙(visibility filtering) 결과 반영",
+   "위 '라벨이 붙으면 어디서 숨겨지나'의 규칙에서 숨김(drop)·삭제 표시가 나온 글을 빼요. 경고 화면·순위 낮춤 결과는 빼지 않아요"
+  ],
+  "AncillaryVFFilter": [
+   "딸린 글 숨김",
+   "안전 규칙이 '관련 글도 숨김'으로 표시한 글을 빼요"
+  ],
+  "AncestorVideoFilter": [
+   "영상 제외 요청 (부모 글)",
+   "영상 없는 피드 요청 때 부모 글에 영상이 있는 답글도 빼요"
+  ],
+  "DedupConversationFilter": [
+   "대화당 하나만",
+   "같은 대화(스레드)에서 나온 후보는 점수가 가장 높은 하나만 남겨요"
+  ],
+  "VideoCarouselFilter": [
+   "영상 묶음 구성",
+   "영상 캐러셀이 켜졌을 때 묶음에 들어갈 영상을 고르고 나머지를 정리해요"
+  ],
+  "FollowingRetweetDeduplicationFilter": [
+   "(팔로잉) 리포스트 중복 제거",
+   "같은 글의 리포스트가 여러 개면 하나만 남겨요"
+  ],
+  "FollowingViewerMutedKeywordFilter": [
+   "(팔로잉) 뮤트 단어",
+   "뮤트한 단어가 들어간 글을 빼요"
+  ],
+  "SelfReplyChainFilter": [
+   "(팔로잉) 모르는 사람에게 단 답글 제외",
+   "답글이 향하는 사람(자기 자신 제외)을 보는 사람이 팔로우하지 않으면 빼요"
+  ],
+  "InvalidConversationModuleFilter": [
+   "(팔로잉) 깨진 대화 묶음 제거",
+   "대화 묶음이 올바르지 않으면 빼요"
+  ],
+  "PushToHomeDedupFilter": [
+   "푸시로 연 글 중복 제거",
+   "알림으로 열어 본 글이 피드에 또 나오지 않게 해요"
+  ],
+  "AdAdjacentServedFilter": [
+   "광고 옆 자리 정리",
+   "광고 바로 옆에 이미 보낸 글을 정리해요"
+  ],
+  "ResultSizeFilter": [
+   "결과 개수 자르기",
+   "점수 매길 후보 수를 정해진 개수로 잘라요"
+  ],
+  "PopularTopicsAuthorDedupFilter": [
+   "인기 주제 경로: 작성자당 하나",
+   "인기 주제 경로로 들어온 후보는 작성자당 하나만 남겨요"
+  ]
+ },
+ "vf": {
+  "SuspendedAuthor": "작성자 계정이 정지됨",
+  "DeactivatedAuthor": "작성자 계정이 비활성화됨",
+  "ErasedAuthor": "작성자 계정이 삭제됨",
+  "OffboardedAuthor": "작성자 계정이 오프보딩됨",
+  "ProtectedAuthor": "비공개 계정의 글 (팔로워만 봄)",
+  "ViewerBlocksAuthor": "보는 사람이 작성자를 차단",
+  "ViewerMutesAuthor": "보는 사람이 작성자를 뮤트",
+  "ViewerMutesRetweets": "보는 사람이 그 작성자의 리포스트를 끔",
+  "NullcastedTweet": "타임라인에 안 뿌리는 글(nullcast)",
+  "StaleTweet": "수정 전 옛 버전 글",
+  "LegalTakedown": "요청 국가의 법적 차단",
+  "LocalLawsTakedown": "요청 국가의 현지 법 차단",
+  "SensitiveViewerLoggedOut": "민감한 미디어 + 로그아웃 사용자",
+  "SensitiveViewerUnderage": "민감한 미디어 + 미성년자",
+  "SensitiveViewerNoStatedAge": "민감한 미디어 + 나이 미입력 (일부 국가)",
+  "ExclusiveTweet": "구독 전용 글 + 로그아웃 사용자",
+  "TrustedFriendsTweet": "친한 친구 전용 글",
+  "GeoRestrictedMedia": "요청 국가에서 막힌 미디어",
+  "DmcaMedia": "저작권(DMCA) 미디어",
+  "NsfwUserAuthor": "성인물 계정(사용자 설정)의 글",
+  "NsfwAdminAuthor": "성인물 계정(관리자 지정)의 글",
+  "NsfwUserTweetFlag": "성인물 표시한 글(사용자)",
+  "NsfwAdminTweetFlag": "성인물 표시한 글(관리자)",
+  "NsfwUser": "성인물 계정의 미디어",
+  "SoftNsfwNewUser": "약한 성인물 + 새 가입자",
+  "OnlyPeopleIFollow": "보는 사람이 '팔로우한 사람 알림만' 설정",
+  "MutedKeyword": "뮤트 단어",
+  "NoConfirmedEmail": "알림 필터: 이메일 미인증 계정",
+  "NoConfirmedPhone": "알림 필터: 전화 미인증 계정",
+  "NoDefaultProfileImage": "알림 필터: 기본 프로필 사진 계정",
+  "NoNewUsers": "알림 필터: 새 계정",
+  "NoNotFollowedBy": "알림 필터: 나를 팔로우하지 않는 계정",
+  "DeactivatedViewer": "보는 사람 계정이 비활성",
+  "SuspendedViewer": "보는 사람 계정이 정지",
+  "ViewerMutesAndDoesNotFollowAuthor": "보는 사람이 뮤트했고 팔로우도 안 함",
+  "ProtectedCommunityTweet": "비공개 커뮤니티 글",
+  "HiddenCommunityTweet": "숨겨진 커뮤니티 글",
+  "AuthorRemovedCommunityTweet": "커뮤니티에서 빠진 작성자의 글",
+  "ArticleTweetContent": "아티클 글 내용",
+  "AuthorBlocksViewerExclusiveContent": "작성자가 차단한 사람에게 전용 콘텐츠",
+  "SmyteSpamTweet": "Smyte 스팸 글",
+  "AbusiveUqf": "약관 위반 의심(품질 필터)",
+  "UntrustedUrlUqf": "신뢰 못 할 링크(품질 필터)",
+  "DownrankSpamReplyUqf": "스팸 답글 낮춤(품질 필터)",
+  "DuplicateMentionUqf": "중복 멘션(품질 필터)",
+  "NotGraduatedUserLabel": "아직 '졸업' 못 한 새 계정 라벨",
+  "EngagementSpammerUserLabel": "반응 스패머 계정 라벨",
+  "BlinkWorstUserLabel": "Blink 최하위 계정 라벨",
+  "DownrankSpamReplyUserLabel": "스팸 답글 계정 라벨",
+  "AgathaSpamTopUserUserLabel": "Agatha 스팸 상위 계정 라벨"
+ }
+}

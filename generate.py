@@ -6,6 +6,9 @@ state/ 폴더에 커밋별 스냅샷과 지난 실행 결과를 저장해 변화
 """
 import argparse, datetime as dt, html, json, os, re, subprocess, sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from limits_render import render_limits, CSS as LIMITS_CSS  # noqa: E402
+
 REPO_URL = "https://github.com/xai-org/x-algorithm"
 HM = "home-mixer/params/param.rs"
 VM = "vm-ranker/params.rs"
@@ -439,7 +442,7 @@ details.help[open]>summary{background:rgba(127,219,202,.15)}
 .helpbox ol{padding-left:18px;display:grid;gap:4px;font-size:13px;color:#cfd9e2}
 .helpbox b{color:#fff}
 /* tabs */
-.tabs{position:sticky;top:0;z-index:5;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:4px;margin-bottom:10px;border:1px solid var(--line);border-radius:12px;background:rgba(12,16,22,.96);backdrop-filter:blur(6px)}
+.tabs{position:sticky;top:0;z-index:5;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:4px;margin-bottom:10px;border:1px solid var(--line);border-radius:12px;background:rgba(12,16,22,.96);backdrop-filter:blur(6px)}
 .tabs a{text-align:center;padding:9px 4px;border-radius:9px;color:#9fb0c0;font-weight:800;font-size:14px}
 .tabs a.act{background:#16324a;color:#fff;box-shadow:inset 0 0 0 1px rgba(29,155,240,.5)}
 .tab{display:none}.tab.act{display:block}
@@ -587,7 +590,7 @@ details.ev>summary{display:flex;align-items:center;gap:6px;padding:7px 10px;flex
 .ocr{border-color:rgba(255,196,107,.35)}
 .elig{margin-top:8px;padding-top:6px;border-top:1px solid var(--line)}
 @media(min-width:900px){.tcs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 8px;align-items:start}}
-@media(max-width:400px){.tabs .lf{display:none}.tabs .ls{display:inline}}
+@media(max-width:560px){.tabs .lf{display:none}.tabs .ls{display:inline}}
 /* this update */
 .upd{border-color:rgba(29,155,240,.45)}
 .tldr{padding-left:17px;font-size:12.5px;color:#dbe4ec;display:grid;gap:2px;margin-bottom:4px}
@@ -631,7 +634,7 @@ def render(ctx):
     A('<!doctype html><html lang="ko" class="js-off"><head><meta charset="utf-8">'
       '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">'
       '<meta name="theme-color" content="#0b0f14"><title>엑스 알고리즘 대시보드</title>'
-      f'<style>{CSS}</style></head><body><div class="wrap">')
+      f'<style>{CSS}{LIMITS_CSS}</style></head><body><div class="wrap">')
     A('<div class="strip"><span class="pulse"></span>'
       f'<span class="si tip"{tip("X가 공개 저장소에 마지막으로 올린 코드 버전이에요. 커밋은 코드 수정 묶음 하나이고, 숫자·영문은 그 버전의 이름표예요. 날짜는 한국 시간")}><span class="l">최신 커밋</span><a href="{REPO_URL}/commit/{latest["sha"]}" target="_blank" rel="noopener"><b>{latest["sha"][:7]}</b></a> · <b>{lt:%m.%d %H:%M}</b></span>'
       f'<span class="si tip"{tip("이 사이트가 저장소를 마지막으로 읽어서 새로 그린 시간이에요. 매일 오전 6시(한국 시간)에 자동으로 갱신돼요")}><span class="l">갱신</span><b>{now:%m.%d %H:%M}</b> (한국 시간)</span>'
@@ -652,7 +655,8 @@ def render(ctx):
       f'<a href="#switch" data-t="switch">스위치<span class="i tip"{tip("기능별 ON/OFF 상태예요. 켜짐은 그 기능이 돌고 있다는 뜻이지, 점수를 더 준다는 뜻이 아니에요")}>ⓘ</span></a>'
       f'<a href="#weight" data-t="weight">가중치<span class="i tip"{tip("답글·좋아요·공유 같은 행동을 얼마나 쳐주는지 숫자로 보여줘요. 클수록 그런 반응이 나올 글을 위로 올려요")}>ⓘ</span></a>'
       f'<a href="#log" data-t="log"><span class="lf">업데이트 기록</span><span class="ls">기록</span><span class="i tip"{tip("X가 코드를 올린 날짜별로 스위치·가중치·설정이 어떻게 바뀌었는지 정리했어요")}>ⓘ</span></a>'
-      f'<a href="#tips" data-t="tips"><span class="lf">크리에이터 팁</span><span class="ls">팁</span><span class="i tip"{tip("공개 코드 숫자로 만든 콘텐츠 팁이에요. 코드가 바뀌면 자동으로 다시 만들어져요")}>ⓘ</span></a></nav>')
+      f'<a href="#tips" data-t="tips"><span class="lf">크리에이터 팁</span><span class="ls">팁</span><span class="i tip"{tip("공개 코드 숫자로 만든 콘텐츠 팁이에요. 코드가 바뀌면 자동으로 다시 만들어져요")}>ⓘ</span></a>'
+      f'<a href="#limits" data-t="limits"><span class="lf">노출 제한</span><span class="ls">제한</span><span class="i tip"{tip("스팸 라벨·자동 조치·피드 필터처럼 글을 숨기거나 빼는 규칙을 코드에서 읽어 정리했어요")}>ⓘ</span></a></nav>')
 
     # ---------------- switch tab
     A(f'<section class="tab" id="t-switch"><div class="note">home-mixer {len(hm_b)}개 (ON {hm_on}) · vm-ranker {len(vm_b)}개 (ON {vm_on}) · 핵심과 NEW만 표시 · 칸을 누르면 설명</div>')
@@ -836,15 +840,21 @@ def render(ctx):
         A(f'<div class="nu"><h4>{esc(date_ko(title))}</h4><ul>' + "".join(note_li(x) for x in items) + '</ul></div>')
     A('</div></details></section>')
     A(render_tips(ctx))
+    try:
+        A(render_limits(ctx))
+    except Exception:
+        import traceback
+        traceback.print_exc()
+        A('<section class="tab" id="t-limits"><div class="warn">이번 빌드에서 노출 제한 규칙을 읽지 못했어요. 다음 갱신 때 다시 시도해요</div></section>')
     A(f'<footer>공개 코드 기본값 · <span class="w">실제 서비스 적용 여부는 확인할 수 없어요 · 추천 순위용 점수이고 수익 지급액과는 별개예요</span><br>'
       f'최신 커밋 {latest["sha"][:7]} ({lt:%Y-%m-%d %H:%M} 한국 시간) · 마지막 갱신 {now:%Y-%m-%d %H:%M} 한국 시간<br>'
       f'<span class="made">✈️ <a href="https://x.com/GreatJabez" target="_blank" rel="noopener">그레잇칼스</a> × 그록이 함께 만들었어요</span></footer>')
     A("""</div><script>
 (function(){var h=document.documentElement;h.classList.remove('js-off');
-var tabs=['switch','weight','log','tips'];
-function show(){var t=(location.hash||'').slice(1);if(tabs.indexOf(t)<0)t='switch';
+var tabs=['switch','weight','log','tips','limits'];
+function show(){var t=(location.hash||'').slice(1),el=null;if(tabs.indexOf(t)<0){el=t?document.getElementById(t):null;var sec=el&&el.closest?el.closest('section.tab'):null;t=sec?sec.id.slice(2):'switch';}
 tabs.forEach(function(x){document.getElementById('t-'+x).classList.toggle('act',x===t);
-document.querySelector('.tabs a[data-t="'+x+'"]').classList.toggle('act',x===t);});}
+document.querySelector('.tabs a[data-t="'+x+'"]').classList.toggle('act',x===t);});if(el){var d=el.closest('details');if(d)d.open=true;setTimeout(function(){el.scrollIntoView({block:'start'});},0);}}
 document.querySelectorAll('.tabs a').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();
 history.replaceState(null,'','#'+a.dataset.t);show();window.scrollTo(0,0);});});
 window.addEventListener('hashchange',show);show();
@@ -1171,7 +1181,8 @@ def render_tips(ctx):
     rows.sort(key=prio)
     A(f'<section class="tab" id="t-tips"><h2 class="th2">크리에이터를 위한 팁</h2>'
       f'<div class="note">최신 커밋 <b>{latest["sha"][:7]}</b> ({lt:%Y-%m-%d} 한국 시간) 기준 · 코드가 바뀔 때마다 숫자와 문장이 자동으로 다시 만들어져요</div>'
-      '<div class="warn">⚠️ 아래 숫자는 <b>피드 순위 점수</b>예요. <b>수익 단가가 아니에요.</b> 공개 코드 기본값이라 실제 서비스에 똑같이 적용되는지는 확인할 수 없어요</div>')
+      '<div class="warn">⚠️ 아래 숫자는 <b>피드 순위 점수</b>예요. <b>수익 단가가 아니에요.</b> 공개 코드 기본값이라 실제 서비스에 똑같이 적용되는지는 확인할 수 없어요</div>'
+      '<div class="mini" style="margin:-2px 2px 8px">🚫 스팸 라벨·자동 조치·피드 필터처럼 글을 숨기거나 빼는 규칙은 <a href="#limits" class="tolog">노출 제한</a> 탭에 따로 정리했어요</div>')
     A(upd_html)
     A(f'<div class="card recent"><div class="ch3"><h3>🆕 최근 바뀐 점</h3><span class="mini">최근 {TIPS_DAYS}일 · {lt.month}/{lt.day} 커밋까지</span></div>')
     if rows:
