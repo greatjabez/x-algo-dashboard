@@ -200,8 +200,8 @@
    "vm-ranker:WeightPerturbationSigma": 0.0
   }
  },
- "refreshed": "2026-11-24T06:44:29.557698+09:00",
- "sha": "269340ce2eb8ca785bafa4f2c17a2e8b752bccd3",
+ "refreshed": "2026-11-25T03:48:09.240766+09:00",
+ "sha": "e005f9528e504596f2c024a274d5fb533ce6488a",
  "switches": {
   "home-mixer:AdsUserLoadEvenSpread": false,
   "home-mixer:AuthorIsControl": false,
@@ -290,6 +290,8 @@
   "home-mixer:EnableVideoCarouselMediumRiskFilter": true,
   "home-mixer:EnableVideoCarouselMoeOnly": false,
   "home-mixer:EnableVideoCarouselMoeSource": false,
+  "home-mixer:EnableVideoCarouselPopularOnly": false,
+  "home-mixer:EnableVideoCarouselPopularVideoSource": false,
   "home-mixer:EnableVideoCarouselSeenFilter": true,
   "home-mixer:EnableVideoCarouselTakeFromFeed": false,
   "home-mixer:EnableViewerColdStart": true,
