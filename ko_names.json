@@ -528,6 +528,14 @@
   "VMRankerSendValueModelInputs": [
    "가치 모델 입력 전달",
    "가치 모델 입력값을 랭커에 전달"
+  ],
+  "EnableVideoCarouselPopularVideoSource": [
+   "캐러셀 인기 영상 소스",
+   "영상 캐러셀 후보를 인기 영상 검색에서 따로 가져와요. 이 후보는 캐러셀에만 쓰여요"
+  ],
+  "EnableVideoCarouselPopularOnly": [
+   "캐러셀 인기 영상만 사용",
+   "영상 캐러셀에 인기 영상 소스에서 온 영상만 써요"
   ]
  },
  "weight": {
@@ -721,6 +729,8 @@
   "VideoCarouselPosition": "캐러셀 위치",
   "VideoCarouselSemanticIdDedupeLevels": "캐러셀 의미 ID 중복 기준",
   "WeightPerturbationSalt": "가중치 흔들기 시드",
-  "WhoToFollowFatigueHours": "팔로우 추천 재노출 간격"
+  "WhoToFollowFatigueHours": "팔로우 추천 재노출 간격",
+  "VideoCarouselPopularVideoClusterId": "캐러셀 인기 영상 검색 서버",
+  "VideoCarouselPopularVideoMaxResults": "캐러셀 인기 영상 최대 개수"
  }
 }

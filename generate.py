@@ -588,6 +588,14 @@ details.ev>summary{display:flex;align-items:center;gap:6px;padding:7px 10px;flex
 .elig{margin-top:8px;padding-top:6px;border-top:1px solid var(--line)}
 @media(min-width:900px){.tcs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 8px;align-items:start}}
 @media(max-width:400px){.tabs .lf{display:none}.tabs .ls{display:inline}}
+/* this update */
+.upd{border-color:rgba(29,155,240,.45)}
+.tldr{padding-left:17px;font-size:12.5px;color:#dbe4ec;display:grid;gap:2px;margin-bottom:4px}
+.uc{border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
+.uc h4{font-size:14px;font-weight:800;margin-bottom:4px}
+.ust{font-size:11.5px;color:var(--dim);margin-bottom:4px}.ust b{color:#e8eef4}
+.ul{margin-top:4px}.ulb{display:inline-block;font-size:10.5px;font-weight:800;color:var(--mint);margin-bottom:1px}
+.ul ul{padding-left:17px;display:grid;gap:2px;font-size:12.5px;color:#cfd9e2}.ul b{color:#fff}.ul code{font-size:10.5px}
 footer{margin-top:14px;font-size:11px;color:var(--dim);line-height:1.5}
 footer .w{color:#ff8f73}
 footer .made{display:inline-block;margin-top:8px;padding:5px 11px;border:1px solid var(--line);border-radius:999px;background:rgba(29,155,240,.08);color:#cfe3f3;font-size:12px;font-weight:700}
@@ -791,7 +799,10 @@ def render(ctx):
         for k, v in d["w_del"]:
             lines.append(f'<div><span class="c del">가중치 삭제</span> {kn("weight", short(k))}</div>')
         oc = d["other_chg"]
-        if oc:
+        if oc and len(oc) <= 6:
+            for k, a, b2 in oc:
+                lines.append(f'<div><span class="c o">설정</span> {kn("setting", short(k))} {esc(setting_val(short(k), a))} → <b>{esc(setting_val(short(k), b2))}</b></div>')
+        elif oc:
             ex = ", ".join(kn("setting", short(k)) for k, _, _ in oc[:8]) + (f" 외 {len(oc) - 8}개" if len(oc) > 8 else "")
             lines.append(f'<div><span class="c o">설정</span> {ex}</div>')
         dirs = ", ".join(f"{esc(n)} {c2}" for n, c2 in s.get("dirs", [])[:5])
@@ -1081,6 +1092,11 @@ def render_tips(ctx):
             how.append("참고: vm-ranker 코드 기본값은 " + ", ".join(f"{ko_label(n)} {fmt(v)}" for n, v in vmv.items()) + "로 home-mixer와 달라요. 이 카드는 설정 기본값을 옮겨 적은 home-mixer 값 기준이에요")
         cards.append(card(title, how, [chip(n) for n in vw], recent(vw), False, src=S(WSRC, *vw)))
 
+    upd_html, upd_keys = render_update(ctx)
+    if "invited" not in upd_keys:  # 최신 업데이트가 아니면 일반 카드로 계속 보여준다
+        iv = invited_reply_card(src_dir)
+        if iv:
+            cards.append(card(iv["title"], iv["what"] + iv["mean"][:2], [], "", False, src=iv["src"]))
     # ---- 최근 바뀐 점
     tl = [x for x in reversed(ctx["timeline"]) if kst(x[0]["date"]) >= cutoff]  # 오래된 것부터
     wch, swch, others = {}, {}, 0
@@ -1156,6 +1172,7 @@ def render_tips(ctx):
     A(f'<section class="tab" id="t-tips"><h2 class="th2">크리에이터를 위한 팁</h2>'
       f'<div class="note">최신 커밋 <b>{latest["sha"][:7]}</b> ({lt:%Y-%m-%d} 한국 시간) 기준 · 코드가 바뀔 때마다 숫자와 문장이 자동으로 다시 만들어져요</div>'
       '<div class="warn">⚠️ 아래 숫자는 <b>피드 순위 점수</b>예요. <b>수익 단가가 아니에요.</b> 공개 코드 기본값이라 실제 서비스에 똑같이 적용되는지는 확인할 수 없어요</div>')
+    A(upd_html)
     A(f'<div class="card recent"><div class="ch3"><h3>🆕 최근 바뀐 점</h3><span class="mini">최근 {TIPS_DAYS}일 · {lt.month}/{lt.day} 커밋까지</span></div>')
     if rows:
         def ri(r):
@@ -1195,6 +1212,206 @@ def render_tips(ctx):
       '<a href="https://x.com/XCreators/status/2119892170224074832" target="_blank" rel="noopener">클립</a> 발표</div>'
       '<div class="mini" style="margin-top:4px">이 칸은 코드에서 오는 내용이 아니라 자동으로 바뀌지 않아요</div></div></section>')
     return "".join(out)
+
+
+# ---------------------------------------------------------------- this-update cards (크리에이터 팁 탭 맨 위)
+# 최신 커밋에서 바뀐 것만 골라 "무엇이 바뀌었나 → 무슨 뜻인가 → 크리에이터는" 카드로 만든다.
+# 모든 문장은 소스 파일에서 확인한 사실만 쓰고, 값·ON/OFF는 매번 소스에서 다시 읽는다.
+INVITED_FILE = "abuse-enforcement-service/service-lib/src/invited_reply.rs"
+SAFETY_FILE = "abuse-enforcement-service/service-lib/src/safety_checks.rs"
+POST_RULES = "abuse-enforcement-service/service-lib/rules/enforcement_post.yaml"
+SPAM_LABEL_KO = {"fast_reply_spam_post": "빠른 답글 스팸", "llm_slop_post": "AI 저품질 글", "gibberish_post": "의미 없는 글",
+                 "anchor_campaign_post": "조직적 캠페인 글", "SpamEmbeddingPtosDistilled": "스팸과 비슷한 글"}
+
+
+def human_secs(v):
+    n = to_num(str(v))
+    if n is None:
+        return str(v)
+    n = int(n)
+    if n % 3600 == 0 and n >= 3600:
+        return f"{n // 3600}시간"
+    if n % 60 == 0 and n >= 60:
+        return f"{n // 60}분"
+    return f"{n}초"
+
+
+def setting_val(name, v):
+    if v is None:
+        return "없음"
+    v = str(v).strip('"')
+    if v == "":
+        return "(빈 값)"
+    if name.endswith("Seconds"):
+        return f"{v} ({human_secs(v)})"
+    return clip(v, 30)
+
+
+def _read(src, rel):
+    try:
+        return open(os.path.join(src, rel), encoding="utf-8").read()
+    except Exception:
+        return ""
+
+
+def first_added(src, rel):
+    out = git(src, "log", "--diff-filter=A", "--format=%H%x1f%cI", "--", rel) if src else None
+    if not out or not out.strip():
+        return None
+    h, d = out.strip().splitlines()[-1].split("\x1f")
+    return h, d
+
+
+def invited_reply_card(src):
+    """태그된 글에 단 답글은 자동 조치를 건너뛰는 예외 (abuse-enforcement-service)."""
+    sc, ir, rules = _read(src, SAFETY_FILE), _read(src, INVITED_FILE), _read(src, POST_RULES)
+    if "invited_reply_stop" not in sc or "typed_mentions" not in ir:
+        return None
+    lab = []
+    for blk in re.split(r"\n\s*-\s+id:\s*", rules)[1:]:
+        m = re.search(r'"(\w+)" in score\.labels', blk)
+        if not m or "act_add_post_labels" not in blk:
+            continue
+        ttl = re.search(r"ttl_msec:\s*(\d+)", blk)
+        days = f"{int(ttl.group(1)) // 86400000}일" if ttl else ""
+        lab.append((m.group(1), days))
+    timed = [(n, d) for n, d in lab if d]
+    what = ["답글을 단 <b>원글 본문에 내 @이름이 직접 적혀 있으면</b>, 자동 스팸 조치 서비스가 그 답글에는 자동 조치(라벨 붙이기 등)를 <b>건너뛰어요</b>",
+            "답글 맨 앞에 자동으로 붙는 @이름은 안 쳐요. 본문으로 보이는 부분에 적힌 멘션만 세요. 원글을 못 읽었을 때도 건너뛰어요"]
+    mean = []
+    if timed:
+        mean.append("이 서비스는 답글에서 " + ", ".join(f"{SPAM_LABEL_KO.get(n, n)}(<code>{esc(n)}</code>)" for n, _ in timed)
+                    + f"이 감지되면 그 글에 {timed[0][1]}짜리 라벨을 붙여요")
+    ut = _read(src, "under-the-hood/strato/lib/underTheHoodLabels.strato")
+    if re.search(r'"SPAM_HIGH_RECALL"[^}]*hidden from recommendations to non-followers', ut, re.S):
+        mean.append("Under the Hood 라벨 설명에 따르면 스팸 의심 라벨(SpamHighRecall)이 붙은 글은 <b>팔로워가 아닌 사람에게 추천되지 않아요</b>")
+    if "high_follower_count" in rules:
+        mean.append("팔로워가 많거나 신뢰도가 높은 계정은 원래부터 이 조치를 건너뛰어요. 실제 기준값은 공개되지 않았어요 (코드엔 가짜 값 12.34)")
+    do = ["나를 @로 직접 부른 글에 다는 답글은 이제 이 자동 조치에서 빠져요",
+          "나를 부르지 않은 글에 다는 답글은 그대로 대상이에요. 몇 초 만에 달아야 '빠른 답글'인지는 코드에 없어요. 감지 규칙은 공개되지 않았어요",
+          "상대가 내 글에 답글을 단 것만으로는 '태그'로 안 쳐요. 상대가 본문에 내 @이름을 직접 써야 해요"]
+    src_s = " · ".join(f"<code>{esc(x)}</code>" for x in (INVITED_FILE + " (ParentPost)", SAFETY_FILE + " (invited_reply_stop)", POST_RULES, "under-the-hood/strato/lib/underTheHoodLabels.strato"))
+    return {"key": "invited", "title": "💬 나를 태그한 글에 단 답글은 자동 스팸 라벨을 건너뛰어요", "tldr": "나를 @로 부른 글에 단 답글은 자동 스팸 라벨 예외",
+            "what": what, "mean": mean, "do": do, "src": src_s, "state": ""}
+
+
+def popular_video_card(src, snap, d):
+    sw, oth = snap["switches"], snap.get("other", {})
+    k_src, k_only, k_car = "home-mixer:EnableVideoCarouselPopularVideoSource", "home-mixer:EnableVideoCarouselPopularOnly", "home-mixer:EnableVideoCarousel"
+    if k_src not in sw and k_only not in sw:
+        return None
+    vs = _read(src, "home-mixer/sources/popular_video_source.rs")
+    sel = _read(src, "home-mixer/selectors/top_k_score_selector.rs")
+    vc = _read(src, "home-mixer/util/video_carousel.rs")
+    cfg = _read(src, "home-mixer/params/config.rs")
+    rk = _read(src, "phoenix-rankall/src/config/mod.rs")
+    mx = str(oth.get("home-mixer:VideoCarouselPopularVideoMaxResults", "")).strip('"')
+    st = lambda k: ("ON" if sw.get(k) else "OFF") if k in sw else "없음"
+    what = []
+    if vs:
+        what.append(f"영상 캐러셀(영상 여러 개를 옆으로 넘겨 보는 칸)에 쓸 <b>'인기 영상' 후보를 따로 가져오는 소스</b>가 생겼어요" + (f" (한 번에 최대 {esc(mx)}개)" if mx else ""))
+    if "popular_video_posts_are_carousel_only" in sel or "ForYouPhoenixRetrievalPopularVideo => true" in vc:
+        what.append("이 소스로만 들어온 글은 <b>캐러셀에만</b> 쓰이고, 일반 피드 순위 경쟁에는 들어가지 않아요")
+    if k_only in sw:
+        what.append("'인기 영상만 사용' 스위치를 켜면 캐러셀이 이 소스에서 온 영상만 써요")
+    on_all = all(sw.get(k) for k in (k_src, k_car) if k in sw)
+    state = f"인기 영상 소스 <b>{st(k_src)}</b> · 인기 영상만 <b>{st(k_only)}</b> · 영상 캐러셀 자체 <b>{st(k_car)}</b>"
+    mean = [("지금 공개 코드 기본값으론 <b>동작하지 않아요</b>. 소스 스위치와 영상 캐러셀 스위치가 둘 다 켜져야 해요" if not on_all
+             else "공개 코드 기본값으로 켜져 있어요. 캐러셀에 인기 영상 후보가 따로 들어와요")]
+    vmin = re.search(r"POPULAR_VIDEO_MIN_VIEW_COUNT", rk) and re.search(r"default_value_t = ([\d_]+), env = \"POPULAR_VIDEO_MIN_VIEW_COUNT\"", rk)
+    fmin = re.search(r"default_value_t = ([\d_]+), env = \"POPULAR_VIDEO_MIN_FAV_COUNT\"", rk)
+    win = re.search(r'WindowConfig::new\("popular_video", (\d+)\)', rk)
+    if vmin and fmin:
+        mean.append(f"phoenix-rankall에는 '인기 영상' 목록을 만드는 코드가 있어요: 영상 글 중 <b>조회 {int(vmin.group(1).replace('_', '')):,}회 이상 + 좋아요 {int(fmin.group(1).replace('_', '')):,}개 이상</b>"
+                    + (f", 최근 {win.group(1)}시간" if win else "") + ", NSFW 영상 제외. 다만 이 목록과 새 소스의 검색 서버(클러스터)가 같은 것인지는 코드에 직접 적혀 있지 않아요")
+    do = []
+    if re.search(r"MAX_VERTICAL_ASPECT_RATIO: f32 = 1\.0", vc) and "in_reply_to_tweet_id.is_none()" in vc:
+        mn = re.search(r"VIDEO_CAROUSEL_MIN_VIDEOS: usize = (\d+)", cfg)
+        mxv = re.search(r"VIDEO_CAROUSEL_MAX_VIDEOS: usize = (\d+)", cfg)
+        do.append("캐러셀에 들어갈 수 있는 건 <b>답글이 아닌 원글의 세로 영상</b>이에요 (가로÷세로 비율 1 미만)"
+                  + (f". 한 번에 {mn.group(1)}~{mxv.group(1)}개가 모여야 캐러셀이 보여요" if mn and mxv else ""))
+    do.append("스위치가 꺼져 있는 동안은 이번 변화로 당장 달라지는 건 없어요. 켜지면 다음 자동 갱신 때 이 카드 문구도 바뀌어요")
+    src_s = " · ".join(f"<code>{esc(x)}</code>" for x in ("home-mixer/params/param.rs (EnableVideoCarouselPopularVideoSource, EnableVideoCarouselPopularOnly, VideoCarouselPopularVideoMaxResults)",
+                                                         "home-mixer/sources/popular_video_source.rs", "home-mixer/selectors/top_k_score_selector.rs", "home-mixer/util/video_carousel.rs",
+                                                         "phoenix-rankall/src/config/mod.rs"))
+    return {"key": "popular", "title": "🎬 영상 캐러셀에 '인기 영상' 후보 소스가 생겼어요 (지금은 꺼짐)" if not on_all else "🎬 영상 캐러셀에 '인기 영상' 후보 소스가 켜졌어요",
+            "tldr": "영상 캐러셀용 인기 영상 소스 추가 (기본값 OFF)" if not on_all else "영상 캐러셀용 인기 영상 소스 ON",
+            "what": what, "mean": mean, "do": do, "src": src_s, "state": state}
+
+
+def teacher_card(snap, d):
+    ch = [(k, a, b) for k, a, b in d["other_chg"] if "Teacher" in k]
+    sws = [(k, v) for k, v in d["sw_add"] if "Teacher" in k] + [(k, b) for k, a, b in d["sw_flip"] if "Teacher" in k]
+    if not ch and not sws:
+        return None
+    what = [f"{esc(name_ko('setting', short(k)) or short(k))}: {esc(setting_val(short(k), a))} → <b>{esc(setting_val(short(k), b))}</b>" for k, a, b in ch]
+    what += [f"{esc(name_ko('switch', short(k)) or short(k))} {'켜짐' if v else '꺼짐'}" for k, v in sws]
+    on = snap["switches"].get("home-mixer:EnableTeacherScoreSideEffect")
+    mean = ["AI 학습 점수는 크고 느린 모델이 매긴 점수를 잠깐 저장해 뒀다가 작고 빠른 모델을 학습시키는 데 쓰는 기록이에요. 바뀐 건 그 기록을 보관하는 시간이에요",
+            "피드에 보여줄 글을 고른 <b>뒤</b> 실행되는 기록 단계(side effect)라, 이번 피드의 노출 순위 계산에는 들어가지 않아요"]
+    return {"key": "teacher", "title": "🧪 AI 학습 점수 보관 시간 변경: 크리에이터와 직접 관련 없어요", "tldr": "AI 학습 점수 보관 시간 변경 (노출과 무관)",
+            "what": what, "mean": mean, "do": ["크리에이터가 따로 할 일은 없어요"],
+            "src": "<code>home-mixer/params/param.rs (TeacherTtlSeconds)</code> · <code>home-mixer/side_effects/teacher_score_side_effect.rs</code>",
+            "state": f"AI 학습 점수 기록 <b>{'ON' if on else 'OFF'}</b>" if on is not None else ""}
+
+
+def render_update(ctx):
+    tl = ctx.get("timeline") or []
+    src = ctx.get("src") or ""
+    snap, latest = ctx["snap"], ctx["latest"]
+    if not tl:
+        return "", set()
+    c, d, s = tl[0]  # 최신 커밋
+    lt = kst(c["date"])
+    cards, used = [], set()
+    pv = popular_video_card(src, snap, d) if any("VideoCarouselPopular" in k for k, *_ in d["sw_add"] + d["sw_flip"] + d["other_chg"]) else None
+    if pv:
+        cards.append(pv)
+        used |= {k for k, *_ in d["sw_add"] + d["sw_flip"] + d["other_chg"] if "VideoCarouselPopular" in k}
+    added = first_added(src, INVITED_FILE)
+    if added and added[0] == c["sha"]:
+        iv = invited_reply_card(src)
+        if iv:
+            cards.insert(0, iv)
+    tc = teacher_card(snap, d)
+    if tc:
+        cards.append(tc)
+        used |= {k for k, *_ in d["sw_add"] + d["sw_flip"] + d["other_chg"] if "Teacher" in k}
+    # 지도에 없는 나머지 변화는 이름만 쉬운 한국어로 보여준다
+    rest = []
+    for k, v in d["sw_add"]:
+        if k not in used:
+            rest.append(f"새 스위치 {kn('switch', short(k))} ({'ON' if v else 'OFF'})")
+    for k, a, b in d["sw_flip"]:
+        if k not in used:
+            rest.append(f"{kn('switch', short(k))} {'켜짐' if b else '꺼짐'}")
+    for k, a, b in d["other_chg"]:
+        if k not in used:
+            rest.append(f"설정 {kn('setting', short(k))} {esc(setting_val(short(k), a))} → {esc(setting_val(short(k), b))}")
+    W = {short(k): v for k, v in snap["weights"].items() if k.startswith("home-mixer:")}
+    out = [f'<div class="card upd"><div class="ch3"><h3>📌 이번 업데이트, 크리에이터가 알 것</h3><span class="mini">{lt.month}/{lt.day} 커밋 '
+           f'<a href="{REPO_URL}/commit/{c["sha"]}" target="_blank" rel="noopener">{c["sha"][:7]}</a></span></div>']
+    if cards:
+        out.append('<ul class="tldr">' + "".join(f'<li>{esc(cd["tldr"])}</li>' for cd in cards) + '</ul>')
+    for cd in cards:
+        out.append(f'<div class="uc"><h4>{cd["title"]}</h4>' + (f'<div class="ust">지금 상태 · {cd["state"]}</div>' if cd["state"] else ""))
+        for lab, key in (("무엇이 바뀌었나", "what"), ("무슨 뜻인가", "mean"), ("크리에이터는", "do")):
+            if cd[key]:
+                out.append(f'<div class="ul"><span class="ulb">{lab}</span><ul>' + "".join(f"<li>{x}</li>" for x in cd[key]) + '</ul></div>')
+        out.append(f'<div class="srcl"><span class="bl">출처</span>{cd["src"]}</div></div>')
+    if rest:
+        out.append('<div class="uc"><h4>그 밖의 변화</h4><ul class="tldr">' + "".join(f"<li>{x}</li>" for x in rest)
+                   + '</ul><div class="mini">크리에이터에게 어떤 뜻인지는 코드에서 확인되지 않았어요</div></div>')
+    if not (d["w_chg"] or d["w_add"] or d["w_del"]):
+        keep = [(n, l) for n, l in (("ShareViaCopyLinkWeight", "링크 복사 공유"), ("ReplyWeight", "답글"), ("ShareViaDmWeight", "DM 공유"), ("QuoteWeight", "인용"),
+                                    ("FollowAuthorWeight", "팔로우"), ("FavoriteWeight", "좋아요"), ("ReportWeight", "신고")) if n in W]
+        mut = ""
+        if W.get("ReplyWeight") is not None and W.get("BidirectionalFollowReplyWeightBoost"):
+            mut = f" · 맞팔 원글 답글 {fmt(W['ReplyWeight'] + W['BidirectionalFollowReplyWeightBoost'])}"
+        out.append('<div class="mini" style="margin-top:6px"><b>안 바뀐 것</b> · 가중치는 하나도 안 바뀌었어요: '
+                   + " · ".join(f"{l} {fmt(W[n])}" for n, l in keep) + mut + '</div>')
+    out.append('<div class="mini" style="margin-top:4px">공개 코드 기본값 기준이에요. 실제 서비스에서 켜져 있는지, 똑같이 쓰이는지는 확인할 수 없어요</div></div>')
+    return "".join(out), {cd["key"] for cd in cards}
 
 
 # ---------------------------------------------------------------- main
